@@ -3,7 +3,7 @@ package Controllers;
 
 import Models.Grid;
 import Models.Human;
-import Models.IA;
+import Models.IA_gogo;
 import Models.Player;
 import Views.GameWindow;
 
@@ -20,7 +20,7 @@ public class Game {
     public void start(){
         boolean game = true;
         Human p1 = new Human("Jean", 1);
-        IA p2 = new IA( 2);
+        IA_gogo p2 = new IA_gogo( 2);
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(p1);
         tabPlayers.add(p2);
