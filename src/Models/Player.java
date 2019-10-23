@@ -3,7 +3,7 @@ package Models;
 import java.util.Scanner;
 
 public abstract class Player {
-    private Integer _id;
+    protected Integer _id;
     public abstract int getAction(int[][] tokens);
 
     public Player(Integer _id) {

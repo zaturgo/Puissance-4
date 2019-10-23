@@ -4,13 +4,23 @@ import Models.Grid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GameGrid extends JPanel {
 
     private Grid _grid;
 
+    public static int lastClickedCol = 0;
+
     public GameGrid(Grid grid) {
         _grid = grid;
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                GameGrid.lastClickedCol = e.getX()/64;
+            }
+        });
     }
 
     protected void paintComponent(Graphics g) {

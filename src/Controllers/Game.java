@@ -1,10 +1,7 @@
 package Controllers;
 
 
-import Models.Grid;
-import Models.Human;
-import Models.IA_gogo;
-import Models.Player;
+import Models.*;
 import Views.GameWindow;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ public class Game {
     public void start(){
         boolean game = true;
         Human p1 = new Human("Jean", 1);
-        IA_gogo p2 = new IA_gogo( 2);
+        IA_toto p2 = new IA_toto( 2);
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(p1);
         tabPlayers.add(p2);
@@ -30,7 +27,7 @@ public class Game {
                 System.out.println("Tour du joueur "+i);
                 try {
                     //add token
-                    _grid.placeToken(tabPlayers.get(i).get_id(), tabPlayers.get(i).getAction());
+                    _grid.placeToken(tabPlayers.get(i).get_id(), tabPlayers.get(i).getAction(_grid.getTokens()));
                 } catch(Exception e) {
                     System.out.println("Placement invalide");
                 }

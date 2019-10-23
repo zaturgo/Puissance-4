@@ -1,5 +1,7 @@
 package Models;
 
+import Views.GameGrid;
+
 import java.util.Scanner;
 
 public class Human extends Player {
@@ -11,21 +13,16 @@ public class Human extends Player {
     }
 
     @Override
-    public Integer getAction(int[][] tokens) {
-        Scanner sc = new Scanner(System.in);
-        while(true){
-            System.out.println("Colonne visée:");
-            String str = sc.nextLine();
-            try{
-                int col = Integer.parseInt(str);
-                if (col<=6 && col>=0){
-                    return col;
-                }else{
-                    System.out.println("Entier entre 0 et 6 uniquement");
-                }
-            }catch(Exception e){
-                System.out.println("mauvais format");
+    public int getAction(int[][] tokens) {
+        GameGrid.lastClickedCol = -1;
+        while(GameGrid.lastClickedCol == -1 || GameGrid.lastClickedCol >= 7) {
+            try {
+                Thread.sleep(100);
+            }
+            catch(Exception e) {
+
             }
         }
+        return GameGrid.lastClickedCol;
     }
 }
