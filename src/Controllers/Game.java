@@ -33,7 +33,7 @@ public class Game {
                 //check if 4 aligned
                 int result = _grid.checkWin();
                 if (result!=0){
-                    game= true;
+                    game= false;
                     System.out.println("Joueur gagnant:"+result);
                 }
                 _grid.debugGrid();
