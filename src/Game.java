@@ -17,4 +17,8 @@ public class Game {
             }
         }
     }
+    public void start() {
+        _grid.placeToken(1, 3);
+        _grid.debugGrid();
+    }
 }
