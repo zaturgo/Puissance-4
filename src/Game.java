@@ -1,10 +1,4 @@
-<<<<<<< HEAD:src/Game.java
 import java.util.ArrayList;
-=======
-package Controllers;
-
-import Models.Grid;
->>>>>>> master:src/Controllers/Game.java
 
 public class Game {
     public void start(){
