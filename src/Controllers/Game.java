@@ -1,17 +1,21 @@
 package Controllers;
 
-import java.util.ArrayList;
 
 import Models.Grid;
 import Models.Human;
 import Models.IA;
 import Models.Player;
+import Views.GameWindow;
+
+import java.util.ArrayList;
 
 public class Game {
     private Grid _grid;
+    private GameWindow _gameWindow;
 
     public Game() {
         _grid = new Grid();
+        _gameWindow = new GameWindow(_grid);
     }
     public void start(){
         boolean game = true;
@@ -20,23 +24,24 @@ public class Game {
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(p1);
         tabPlayers.add(p2);
-    //game loop, stops when game == false;
+        //game loop, stops when game == false;
         while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
                 System.out.println("Tour du joueur "+i);
-                try{
+                try {
                     //add token
-                    _grid.placeToken(tabPlayers.get(i).get_id(),tabPlayers.get(i).getAction());
-                }catch(Exception e){
+                    _grid.placeToken(tabPlayers.get(i).get_id(), tabPlayers.get(i).getAction());
+                } catch(Exception e) {
                     System.out.println("Placement invalide");
                 }
+                _gameWindow.update();
                 //check if 4 aligned
                 int result = _grid.checkWin();
-                if (result!=0){
-                    game= true;
+                if (result != 0){
+                    game = false;
                     System.out.println("Joueur gagnant:"+result);
+                    break;
                 }
-                _grid.debugGrid();
             }
         }
     }
