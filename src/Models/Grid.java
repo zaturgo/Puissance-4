@@ -47,4 +47,8 @@ public class Grid {
             System.out.println();
         }
     }
+
+    public int checkWin() {
+        return 0;
+    }
 }

@@ -1,3 +1,5 @@
+package Models;
+
 public class Player {
     private Integer _id;
     public Integer getAction(){

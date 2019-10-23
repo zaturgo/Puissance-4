@@ -1,4 +1,6 @@
-public class Human extends Player{
+package Models;
+
+public class Human extends Player {
     private String _name;
 
     public Human(String _name, Integer _id) {
