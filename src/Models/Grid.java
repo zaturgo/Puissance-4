@@ -1,3 +1,5 @@
+package Models;
+
 public class Grid {
     ///
     /// The grid represents the game grid

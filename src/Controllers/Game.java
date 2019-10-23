@@ -1,3 +1,7 @@
+package Controllers;
+
+import Models.Grid;
+
 public class Game {
     private Grid _grid;
     public Game() {
