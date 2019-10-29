@@ -8,7 +8,7 @@ public class Grid {
     /// 0 = no token placed
     /// int > 0 = id of the player's token
     ///
-    private int[][] _grid = new int[7][7];
+    private int[][] _grid = new int[6][7];
 
     ///
     /// Constructor
@@ -49,12 +49,6 @@ public class Grid {
     ///
     public int[][] getTokens() {
         // Copy to avoid modifications out of the class
-        int[][] res = new int[7][7];
-        for (int i = 0;i < _grid.length; i++) {
-            for (int j = 0;j < _grid[i].length;j++) {
-                res[i][j] = _grid[i][j];
-            }
-        }
-        return res;
+        return GridUtils.copyGrid(_grid);
     }
 }

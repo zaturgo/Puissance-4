@@ -1,6 +1,8 @@
 package Utils;
 
 public class GridUtils {
+    public static final int NbLine = 6;
+    public static final int NbCol = 7;
 
     /// Returns 0 if none wins
     /// Otherwise it returns the winner's playerId
@@ -21,7 +23,7 @@ public class GridUtils {
     ///
     static private boolean fourAligned(int line, int col, int[][] tokens) {
         for(int count = 0; count < 4; count++) {
-            if (line + count >= 7)
+            if (line + count >= NbLine)
                 break;
             if (tokens[line + count][col] != tokens[line][col]) {
                 break;
@@ -30,7 +32,7 @@ public class GridUtils {
                 return true;
         }
         for(int count = 0; count < 4; count++) {
-            if(col + count >= 7)
+            if(col + count >= NbCol)
                 break;
             if(tokens[line][col+count] != tokens[line][col]) {
                 break;
@@ -39,7 +41,7 @@ public class GridUtils {
                 return true;
         }
         for(int d = 1; d < 4; d++) {
-            if(col + d >= 7 || line + d >= 7)
+            if(col + d >= 7 || line + d >= NbLine)
                 break;
             if(tokens[line + d][col + d] != tokens[line][col])
                 break;
@@ -47,7 +49,7 @@ public class GridUtils {
                 return true;
         }
         for(int d = 1; d < 4; d++) {
-            if(col - d < 0 || line + d >= 7)
+            if(col - d < 0 || line + d >= NbLine)
                 break;
             if(tokens[line + d][col - d] != tokens[line][col])
                 break;
@@ -58,7 +60,7 @@ public class GridUtils {
     }
     // Copy the grid
     static public int[][] copyGrid(int[][] tokens) {
-        int[][] res = new int[7][7];
+        int[][] res = new int[NbLine][NbCol];
         for (int i = 0;i < tokens.length; i++) {
             for (int j = 0;j < tokens[i].length;j++) {
                 res[i][j] = tokens[i][j];

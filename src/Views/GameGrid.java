@@ -1,6 +1,7 @@
 package Views;
 
 import Models.Grid;
+import Utils.GridUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class GameGrid extends JPanel {
         int size = 64;
 
         int y = 0;
-        for (int horz = 0; horz < 7; horz++) {
+        for (int horz = 0; horz < 6; horz++) {
             int x = 0;
             for (int vert = 0; vert < 7; vert++) {
                 g.drawRect(x, y, size, size);
@@ -36,8 +37,8 @@ public class GameGrid extends JPanel {
             }
             y += size;
         }
-        for (int i = 6; i >= 0; i--) {
-            for(int j = 0; j < 7; j++) {
+        for (int i = GridUtils.NbLine-1; i >= 0; i--) {
+            for(int j = 0; j < GridUtils.NbCol; j++) {
                 if(_grid.getTokens()[i][j] == 1) {
                     g.setColor(Color.red);
                     g.fillOval(j * 64, i * 64, 64, 64);
