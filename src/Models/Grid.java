@@ -1,9 +1,5 @@
 package Models;
 
-import Utils.GridUtils;
-
-import java.util.ArrayList;
-
 public class Grid implements Cloneable{
     public Object clone() throws CloneNotSupportedException
     {
@@ -16,6 +12,9 @@ public class Grid implements Cloneable{
     private long mask = 0;
     public final int height = 6;
     public final int width = 7;
+    public final int MIN_SCORE = -(width*height)/2 + 3;
+    public final int MAX_SCORE = (width*height+1)/2 - 3;
+
     private int moves = 0;
 
     public boolean canPlay(int col) {
@@ -67,6 +66,18 @@ public class Grid implements Cloneable{
         if((m & (m >> 2)) > 0) return true;
 
         return false;
+    }
+
+    public int getNbMoves() {
+        return moves;
+    }
+
+    ///
+    /// return a compact representation of a position on WIDTH*(HEIGHT+1) bits.
+    ///
+    long getKey()
+    {
+        return bitboard + mask;
     }
 
     public void changePlayerTurn() {
