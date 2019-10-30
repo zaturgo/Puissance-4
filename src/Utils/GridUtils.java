@@ -1,9 +1,14 @@
 package Utils;
 
+import Models.Grid;
+
+import java.util.ArrayList;
+
 public class GridUtils {
     public static final int NbLine = 6;
     public static final int NbCol = 7;
 
+    ///
     /// Returns 0 if none wins
     /// Otherwise it returns the winner's playerId
     ///
@@ -17,6 +22,35 @@ public class GridUtils {
             }
         }
         return 0;
+    }
+    static public boolean isWinningMove(int col, Grid grid, int playerId) {
+        ArrayList<Integer> tokens[] = grid.newGetTokens();
+        int line = tokens[col].size() - 1;
+        // Check vert
+        for(int i = 1; (line - i) >= 0 ; i++) {
+            if(!(tokens[col].get(line - i) == playerId))
+                break;
+            if(i == 2) // == 2 because next turn i will be equal to 3
+                return true;
+        }
+        // Check lines
+        int count = 0;
+        for(int i = -3; i < 3; i++) {
+            if(col + i >= NbCol || line < 0)
+                break;
+            if(col + i < 0 || tokens[col + i].size() == 0) {
+                count = 0;
+                continue;
+            }
+            if(tokens[col + i].get(line - 1) == playerId) {
+                count++;
+                if(count == 3)
+                    return true;
+            }
+            else
+                count = 0;
+        }
+        return false;
     }
     ///
     /// Look if 3 tokens are aligned next to the one placed in [line][col]
@@ -61,8 +95,8 @@ public class GridUtils {
     // Copy the grid
     static public int[][] copyGrid(int[][] tokens) {
         int[][] res = new int[NbLine][NbCol];
-        for (int i = 0;i < tokens.length; i++) {
-            for (int j = 0;j < tokens[i].length;j++) {
+        for (int i = 0;i < NbLine; i++) {
+            for (int j = 0;j < NbCol;j++) {
                 res[i][j] = tokens[i][j];
             }
         }
@@ -86,7 +120,7 @@ public class GridUtils {
     ///
     static public void debugGrid(int[][] tokens) {
         // Init grid to 0
-        for (int i = 0;i < tokens.length; i++) {
+        for (int i = 0;i < NbCol; i++) {
             for (int j = 0;j < tokens[i].length;j++) {
                 System.out.print(tokens[i][j]);
             }
@@ -97,7 +131,7 @@ public class GridUtils {
     /// Returns -1 if no col found
     ///
     static public int getWinnableCol(int[][] tokens, int playerId) {
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             if(GridUtils.checkWin(tempGrid) != 0) {
@@ -108,7 +142,7 @@ public class GridUtils {
     }
     static public int getNbPossibleWin(int[][] tokens, int playerId) {
         int count = 0;
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             // see if the other player can win next turn
@@ -122,7 +156,7 @@ public class GridUtils {
     /// Return -1 if no unavoidable win next turn
     ///
     static public int getUnavoidableWinNextTurn(int[][] tokens, int playerId) {
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             if(GridUtils.getNbPossibleWin(tempGrid, playerId) >= 2)

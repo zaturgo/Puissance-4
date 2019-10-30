@@ -1,6 +1,9 @@
 package Models;
 
 import Utils.GridUtils;
+import com.sun.corba.se.spi.copyobject.CopyobjectDefaults;
+
+import java.util.ArrayList;
 
 public class Grid {
     ///
@@ -8,7 +11,7 @@ public class Grid {
     /// 0 = no token placed
     /// int > 0 = id of the player's token
     ///
-    private int[][] _grid = new int[6][7];
+    private ArrayList<Integer> _grid[] = new ArrayList[GridUtils.NbCol];
 
     ///
     /// Constructor
@@ -16,9 +19,7 @@ public class Grid {
     public Grid() {
         // Init grid to 0
         for (int i = 0;i < _grid.length; i++) {
-            for (int j = 0;j < _grid[i].length;j++) {
-                _grid[i][j] = 0;
-            }
+            _grid[i] = new ArrayList<>();
         }
     }
     ///
@@ -26,29 +27,28 @@ public class Grid {
     /// If the token can't be placed, throw an InvalidArgumentException
     ///
     public void placeToken(int playerId, int col) {
-        boolean placed = false;
-        for(int i = _grid.length-1; i >= 0; --i) {
-            if(_grid[i][col] == 0) {
-                _grid[i][col] = playerId;
-                placed = true;
-                break;
-            }
-        }
-        if(!placed)
+        if(_grid[col].size() >= GridUtils.NbLine)
             throw new IllegalArgumentException();
+
+        _grid[col].add(playerId);
     }
     ///
     /// Returns 0 if none wins
     /// Otherwise it returns the winner's playerId
     ///
     public int checkWin() {
-        return GridUtils.checkWin(_grid);
+        //return GridUtils.checkWin(_grid);
+        return 0;
     }
     ///
     /// Returns the 2 dimensions tabs with the tokens
     ///
     public int[][] getTokens() {
         // Copy to avoid modifications out of the class
-        return GridUtils.copyGrid(_grid);
+        //return GridUtils.copyGrid(_grid);
+        return new int[][]{};
+    }
+    public ArrayList[] newGetTokens() {
+        return _grid; // TODO: faire une copie ici
     }
 }
