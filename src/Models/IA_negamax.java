@@ -3,6 +3,7 @@ package Models;
 public class IA_negamax extends Player {
 
     private TranspositionTable _transTable;
+    private int[] columnOrder = {3, 4, 2, 5, 1, 6, 0};// initialize the column exploration order, starting with center columns
 
     public IA_negamax(Integer _id) {
         super(_id);
@@ -38,9 +39,9 @@ public class IA_negamax extends Player {
         }
 
         for(int x = 0; x < grid.width; x++) // compute the score of all possible next move and keep the best one
-            if(grid.canPlay(x)) {
+            if(grid.canPlay(columnOrder[x])) {
                 Grid grid2 = (Grid)grid.clone();
-                grid2.play(x);               // It's opponent turn in P2 position after current player plays x column.
+                grid2.play(columnOrder[x]);               // It's opponent turn in P2 position after current player plays x column.
                 int score = -negamax(grid2, -beta, -alpha); // explore opponent's score within [-beta;-alpha] windows:
                 // no need to have good precision for score better than beta (opponent's score worse than -beta)
                 // no need to check for score worse than alpha (opponent's score worse better than -alpha)
