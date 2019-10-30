@@ -23,35 +23,6 @@ public class GridUtils {
         }
         return 0;
     }
-    static public boolean isWinningMove(int col, Grid grid, int playerId) {
-        ArrayList<Integer> tokens[] = grid.newGetTokens();
-        int line = tokens[col].size() - 1;
-        // Check vert
-        for(int i = 1; (line - i) >= 0 ; i++) {
-            if(!(tokens[col].get(line - i) == playerId))
-                break;
-            if(i == 2) // == 2 because next turn i will be equal to 3
-                return true;
-        }
-        // Check lines
-        int count = 0;
-        for(int i = -3; i < 3; i++) {
-            if(col + i >= NbCol || line < 0)
-                break;
-            if(col + i < 0 || tokens[col + i].size() == 0) {
-                count = 0;
-                continue;
-            }
-            if(tokens[col + i].get(line - 1) == playerId) {
-                count++;
-                if(count == 3)
-                    return true;
-            }
-            else
-                count = 0;
-        }
-        return false;
-    }
     ///
     /// Look if 3 tokens are aligned next to the one placed in [line][col]
     ///

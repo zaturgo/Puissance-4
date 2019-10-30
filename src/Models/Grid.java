@@ -1,54 +1,99 @@
 package Models;
 
 import Utils.GridUtils;
-import com.sun.corba.se.spi.copyobject.CopyobjectDefaults;
 
 import java.util.ArrayList;
 
-public class Grid {
+public class Grid implements Cloneable{
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
     ///
-    /// The grid represents the game grid
-    /// 0 = no token placed
-    /// int > 0 = id of the player's token
     ///
-    private ArrayList<Integer> _grid[] = new ArrayList[GridUtils.NbCol];
+    ///
+    private long bitboard = 0;
+    private long mask = 0;
+    public final int height = 6;
+    public final int width = 7;
+    private int moves = 0;
 
-    ///
-    /// Constructor
-    ///
-    public Grid() {
-        // Init grid to 0
-        for (int i = 0;i < _grid.length; i++) {
-            _grid[i] = new ArrayList<>();
-        }
+    public boolean canPlay(int col) {
+        return (mask & top_mask(col)) == 0;
     }
-    ///
-    /// Place the token in the grid
-    /// If the token can't be placed, throw an InvalidArgumentException
-    ///
-    public void placeToken(int playerId, int col) {
-        if(_grid[col].size() >= GridUtils.NbLine)
-            throw new IllegalArgumentException();
 
-        _grid[col].add(playerId);
+    public void play(int col)
+    {
+        changePlayerTurn();
+        mask |= mask + bottom_mask(col);
     }
-    ///
-    /// Returns 0 if none wins
-    /// Otherwise it returns the winner's playerId
-    ///
-    public int checkWin() {
-        //return GridUtils.checkWin(_grid);
-        return 0;
+    // return a bitmask containg a single 1 corresponding to the bottom cell of a given column
+    private long bottom_mask(int col) {
+        return (long)1 << col*(height+1);
     }
-    ///
-    /// Returns the 2 dimensions tabs with the tokens
-    ///
-    public int[][] getTokens() {
-        // Copy to avoid modifications out of the class
-        //return GridUtils.copyGrid(_grid);
-        return new int[][]{};
+
+    // return a bitmask containg a single 1 corresponding to the top cel of a given column
+    private long top_mask(int col) {
+        return (long)1 << height - 1 << col*(height+1);
     }
-    public ArrayList[] newGetTokens() {
-        return _grid; // TODO: faire une copie ici
+
+    // return a bitmask 1 on all the cells of a given column
+    private long column_mask(int col) {
+        return (((long)1 << height)-1) << col*(height+1);
+    }
+
+    public boolean isWinningMove(int col)
+    {
+        long pos = bitboard;
+        pos |= (mask + bottom_mask(col)) & column_mask(col);
+        return alignment(pos);
+    }
+
+    public boolean alignment(long pos ) {
+        // horizontal
+        long m = pos & (pos >> (height+1));
+        if((m & (m >> (2*(height+1)))) > 0) return true;
+
+        // diagonal 1
+        m = pos & (pos >> height);
+        if((m & (m >> (2*height))) > 0) return true;
+
+        // diagonal 2
+        m = pos & (pos >> (height+2));
+        if((m & (m >> (2*(height+2)))) > 0) return true;
+
+        // vertical;
+        m = pos & (pos >> 1);
+        if((m & (m >> 2)) > 0) return true;
+
+        return false;
+    }
+
+    public void changePlayerTurn() {
+        bitboard ^= mask;
+        moves++;
+    }
+
+    // Returns bitboard of player 1
+    public long getBitboardPlayer1() {
+        if(moves%2 == 1)
+            return bitboard;
+        else
+            return bitboard ^ mask;
+    }
+    // Retruns bitboard of player 2
+    public long getBitboardPlayer2() {
+        if(moves%2 == 1)
+            return bitboard ^ mask;
+        else
+            return bitboard;
+    }
+    public void debugGrid() {
+        System.out.println("bitboard p1: ");
+        System.out.println(Long.toBinaryString(getBitboardPlayer1()));
+        System.out.println("bitboard p2: ");
+        System.out.println(Long.toBinaryString(getBitboardPlayer2()));
+        System.out.println("mask :");
+        System.out.println(Long.toBinaryString(mask));
     }
 }

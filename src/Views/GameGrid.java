@@ -38,18 +38,27 @@ public class GameGrid extends JPanel {
             }
             y += size;
         }
-        ArrayList<Integer> tokens[] = _grid.newGetTokens();
-        for(int j = 0; j < GridUtils.NbCol; j++) {
-            for(int i = 0; i < tokens[j].size(); i++) {
-                if(tokens[j].get(i) == 1) {
-                    g.setColor(Color.red);
-                }
-                else if(tokens[j].get(i) == 2) {
-                    g.setColor(Color.blue);
-                }
-                g.fillOval(j * 64, (GridUtils.NbLine - i - 1) * 64, 64, 64);
+        long bitboard = _grid.getBitboardPlayer1();
+        for(int i = 0; i < 48; i ++) {
+            if((bitboard>>i)%2 == 1) {
+                System.out.println("Vrai pour : " + i);
+                int xa = i / 7;
+                int ya = i % 7;
+                g.setColor(Color.red);
+                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
             }
         }
+        long bitboard2 = _grid.getBitboardPlayer2();
+        for(int i = 0; i < 48; i ++) {
+            if((bitboard2>>i)%2 == 1) {
+                System.out.println("Vrai pour : " + i);
+                int xa = i / 7;
+                int ya = i % 7;
+                g.setColor(Color.blue);
+                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
+            }
+        }
+
     }
 
 }
