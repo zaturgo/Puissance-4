@@ -41,7 +41,7 @@ public class GameGrid extends JPanel {
         long bitboard = _grid.getBitboardPlayer1();
         for(int i = 0; i < 48; i ++) {
             if((bitboard>>i)%2 == 1) {
-                System.out.println("Vrai pour : " + i);
+                //System.out.println("Vrai pour : " + i);
                 int xa = i / 7;
                 int ya = i % 7;
                 g.setColor(Color.red);
@@ -51,7 +51,7 @@ public class GameGrid extends JPanel {
         long bitboard2 = _grid.getBitboardPlayer2();
         for(int i = 0; i < 48; i ++) {
             if((bitboard2>>i)%2 == 1) {
-                System.out.println("Vrai pour : " + i);
+                //System.out.println("Vrai pour : " + i);
                 int xa = i / 7;
                 int ya = i % 7;
                 g.setColor(Color.blue);

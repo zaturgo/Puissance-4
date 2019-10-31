@@ -9,7 +9,7 @@ public class Main {
         }
         catch(Exception e )
         {
-            System.out.println("Pas de chance"); //todo
+            e.printStackTrace(new java.io.PrintStream(System.out));
         }
     }
 }

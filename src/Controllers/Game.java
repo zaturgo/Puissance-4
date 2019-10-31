@@ -18,8 +18,18 @@ public class Game {
     public void start() throws CloneNotSupportedException {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
-        tabPlayers.add(new Human("Jean", 1));
+
+        tabPlayers.add(new IA_toto(1));
         tabPlayers.add(new IA_negamax( 2));
+
+        _grid.play(3);
+        _grid.play(3);
+        _grid.play(3);
+        _grid.play(3);
+        _grid.play(3);
+        _grid.play(3);
+
+        //IA_negamax test = new IA_negamax(2);
         //game loop, stops when game == false;
         while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
