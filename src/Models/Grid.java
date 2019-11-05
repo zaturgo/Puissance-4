@@ -8,7 +8,7 @@ public class Grid {
     /// 0 = no token placed
     /// int > 0 = id of the player's token
     ///
-    private int[][] _grid = new int[6][7];
+    private int[][] _grid = new int[GridUtils.NbLine][GridUtils.NbCol];
 
     ///
     /// Constructor

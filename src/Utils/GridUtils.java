@@ -58,6 +58,67 @@ public class GridUtils {
         }
         return false;
     }
+    static public int threeAligned(int[][] tokens, int idPlayer){
+        //if 2 aligned and 2 free horizontal XXOO
+        for (int i = 0; i<GridUtils.NbLine; i++){
+            int count = 0;
+            for (int j = 0; j<GridUtils.NbCol; j++){
+                if (tokens[i][j] == idPlayer){
+                    count+=1;
+                }else{
+                    count = 0;
+                }
+                if (count ==2&&j<=4){
+                    if (tokens[i][j+1]==0&&tokens[i][j+2]==0){
+                        return j+1;
+                    }
+                }
+            }
+        }//                                X
+        //if 2 aligned and 2 free vertical X
+        for (int l=0;l<GridUtils.NbCol; l++){
+            int countVert = 0;
+            for (int k=0;k<GridUtils.NbLine; k++){
+                if (tokens[k][l]==idPlayer){
+                    countVert+=1;
+                }else{
+                    countVert=0;
+                }
+                if (countVert ==2&&k>=3){
+                    if (tokens[k-2][l]==0&&tokens[k-3][l]==0){
+                        return l;
+                    }
+                }
+            }
+        }                     //X     X
+        //check the diagonals X O  et O X
+        for (int m = 3; m<GridUtils.NbLine; m++){//we start at the second line
+            for (int n=0; n<4; n++){//we end 2 col before end
+                if (tokens[m][n]==idPlayer&&tokens[m-1][n+1]==idPlayer&&tokens[m-2][n+2]==0){
+                    return n+2;
+                }
+            }
+        }
+        for (int m = 3; m<GridUtils.NbLine; m++){//we start at the second line
+            for (int n=3; n<GridUtils.NbCol; n++){//we start at the third col(to avoid out of bounds)
+                if (tokens[m][n]==idPlayer&&tokens[m-1][n-1]==idPlayer&&tokens[m-2][n-2]==0){
+                    return n-2;
+                }
+            }
+        }
+        //check if two aligned with a hole X0X0 and 0X0X
+        for (int m = 0; m<GridUtils.NbLine; m++){
+            for (int n=0; n<4; n++){//we stop at the 4th col to avoid out of bounds
+                if (tokens[m][n]==idPlayer&&tokens[m][n+1]==0&&tokens[m][n+2]==idPlayer&&tokens[m][n+2]==0){
+                    return n+1;
+                }
+                if (tokens[m][n]==0&&tokens[m][n+1]==idPlayer&&tokens[m][n+2]==0&&tokens[m][n+2]==idPlayer){
+                    return n;
+                }
+            }
+        }
+        return -1;
+    }
     // Copy the grid
     static public int[][] copyGrid(int[][] tokens) {
         int[][] res = new int[NbLine][NbCol];
@@ -97,7 +158,7 @@ public class GridUtils {
     /// Returns -1 if no col found
     ///
     static public int getWinnableCol(int[][] tokens, int playerId) {
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             if(GridUtils.checkWin(tempGrid) != 0) {
