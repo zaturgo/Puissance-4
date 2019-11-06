@@ -37,4 +37,13 @@ public class IA_toto extends Player {
         }
         return -1;
     }
+    public int getNbWinningMove(Grid grid) {
+        int count = 0;
+        for(int i = 0; i < grid.width; i ++) {
+            if(grid.canPlay(i))
+                if(grid.isWinningMove(i))
+                    count++;
+        }
+        return count;
+    }
 }
