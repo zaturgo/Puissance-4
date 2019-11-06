@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 ///
@@ -41,8 +42,5 @@ public class TranspositionTable {
         }
         else
             return 0;
-    }
-    public void save() {
-
     }
 }

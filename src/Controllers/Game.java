@@ -20,18 +20,10 @@ public class Game {
         ArrayList<Player> tabPlayers= new ArrayList<>();
 
         tabPlayers.add(new IA_toto(1));
-        tabPlayers.add(new IA_negamax( 2));
-
-        _grid.play(3);
-        _grid.play(3);
-        _grid.play(3);
-        _grid.play(3);
-        _grid.play(3);
-        _grid.play(3);
-
+        tabPlayers.add(new Human( "pedro", 2));
         //IA_negamax test = new IA_negamax(2);
         //game loop, stops when game == false;
-        while(game){
+       while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
                 System.out.println("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
@@ -40,13 +32,14 @@ public class Game {
                     continue;
                 }
                 if (_grid.isWinningMove(playerMove)){
-                    game = false;
+                    //game = false;
                     System.out.println("Joueur gagnant:"+i);
                     //break;
                 }
                 _grid.play(playerMove);
                 _gameWindow.update();
+                //tabPlayers.get(i).saveOpeningBook("test" + i);
             }
-        }
+       }
     }
 }
