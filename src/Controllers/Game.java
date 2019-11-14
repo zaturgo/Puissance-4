@@ -37,6 +37,7 @@ public class Game {
                     //break;
                 }
                 _grid.play(playerMove);
+                _grid.toArray();
                 _gameWindow.update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
             }
