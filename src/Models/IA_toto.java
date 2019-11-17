@@ -15,29 +15,35 @@ public class IA_toto extends Player {
     }
 
     @Override
-    public int getAction(int[][] tokens) {
+    public int getAction(Grid grid) {
         // First, let's see if we can win
-        int temp = GridUtils.getWinnableCol(tokens, _id);
-        if(temp != -1)
-            return temp;
+        for (int i = 0; i < grid.width; i++) {
+            if(grid.canPlay(i))
+                if(grid.isWinningMove(i))
+                    return i;
+        }
+        grid.changePlayerTurn();
         // Then, let's see if the other player can win next turn
-        temp = GridUtils.getWinnableCol(tokens, _otherPlayerId);
-        if(temp != -1)
-            return temp;
-        // Then, let's see if we can create an unavoidable win next turn
-        temp = GridUtils.getUnavoidableWinNextTurn(tokens, _id);
-        if(temp != -1)
-            return temp;
-        // Same for the other player
-        temp = GridUtils.getUnavoidableWinNextTurn(tokens, _otherPlayerId);
-        if(temp != -1)
-            return temp;
+        for (int i = 0; i < grid.width; i++) {
+            if(grid.canPlay(i))
+                if(grid.isWinningMove(i))
+                    return i;
+        }
         // Return the first col free
-        for (int i = 0; i < tokens.length; i++) {
-            if(GridUtils.placeToken(_id, i, tokens)) {
+        for (int i = 0; i < grid.width; i++) {
+            if(grid.canPlay(i)) {
                 return i;
             }
         }
         return -1;
+    }
+    public int getNbWinningMove(Grid grid) {
+        int count = 0;
+        for(int i = 0; i < grid.width; i ++) {
+            if(grid.canPlay(i))
+                if(grid.isWinningMove(i))
+                    count++;
+        }
+        return count;
     }
 }

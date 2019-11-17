@@ -2,8 +2,6 @@ package Models;
 
 import Views.GameGrid;
 
-import java.util.Scanner;
-
 public class Human extends Player {
     private String _name;
 
@@ -13,7 +11,7 @@ public class Human extends Player {
     }
 
     @Override
-    public int getAction(int[][] tokens) {
+    public int getAction(Grid grid) {
         GameGrid.lastClickedCol = -1;
         while(GameGrid.lastClickedCol == -1 || GameGrid.lastClickedCol >= 7) {
             try {

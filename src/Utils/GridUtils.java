@@ -1,9 +1,14 @@
 package Utils;
 
+import Models.Grid;
+
+import java.util.ArrayList;
+
 public class GridUtils {
     public static final int NbLine = 6;
     public static final int NbCol = 7;
 
+    ///
     /// Returns 0 if none wins
     /// Otherwise it returns the winner's playerId
     ///
@@ -122,8 +127,8 @@ public class GridUtils {
     // Copy the grid
     static public int[][] copyGrid(int[][] tokens) {
         int[][] res = new int[NbLine][NbCol];
-        for (int i = 0;i < tokens.length; i++) {
-            for (int j = 0;j < tokens[i].length;j++) {
+        for (int i = 0;i < NbLine; i++) {
+            for (int j = 0;j < NbCol;j++) {
                 res[i][j] = tokens[i][j];
             }
         }
@@ -147,7 +152,7 @@ public class GridUtils {
     ///
     static public void debugGrid(int[][] tokens) {
         // Init grid to 0
-        for (int i = 0;i < tokens.length; i++) {
+        for (int i = 0;i < NbCol; i++) {
             for (int j = 0;j < tokens[i].length;j++) {
                 System.out.print(tokens[i][j]);
             }
@@ -169,7 +174,7 @@ public class GridUtils {
     }
     static public int getNbPossibleWin(int[][] tokens, int playerId) {
         int count = 0;
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             // see if the other player can win next turn
@@ -183,7 +188,7 @@ public class GridUtils {
     /// Return -1 if no unavoidable win next turn
     ///
     static public int getUnavoidableWinNextTurn(int[][] tokens, int playerId) {
-        for (int i = 0; i < tokens.length; i++) {
+        for (int i = 0; i < NbCol; i++) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, i, tempGrid);
             if(GridUtils.getNbPossibleWin(tempGrid, playerId) >= 2)

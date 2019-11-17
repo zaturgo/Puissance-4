@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class GameGrid extends JPanel {
 
@@ -29,26 +30,35 @@ public class GameGrid extends JPanel {
         int size = 64;
 
         int y = 0;
-        for (int horz = 0; horz < 6; horz++) {
+        for (int horz = 0; horz < GridUtils.NbLine; horz++) {
             int x = 0;
-            for (int vert = 0; vert < 7; vert++) {
+            for (int vert = 0; vert < GridUtils.NbCol; vert++) {
                 g.drawRect(x, y, size, size);
                 x += size;
             }
             y += size;
         }
-        for (int i = GridUtils.NbLine-1; i >= 0; i--) {
-            for(int j = 0; j < GridUtils.NbCol; j++) {
-                if(_grid.getTokens()[i][j] == 1) {
-                    g.setColor(Color.red);
-                    g.fillOval(j * 64, i * 64, 64, 64);
-                }
-                else if(_grid.getTokens()[i][j] == 2) {
-                    g.setColor(Color.blue);
-                    g.fillOval(j * 64, i * 64, 64, 64);
-                }
+        long bitboard = _grid.getBitboardPlayer1();
+        for(int i = 0; i < 48; i ++) {
+            if((bitboard>>i)%2 == 1) {
+                //System.out.println("Vrai pour : " + i);
+                int xa = i / 7;
+                int ya = i % 7;
+                g.setColor(Color.red);
+                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
             }
         }
+        long bitboard2 = _grid.getBitboardPlayer2();
+        for(int i = 0; i < 48; i ++) {
+            if((bitboard2>>i)%2 == 1) {
+                //System.out.println("Vrai pour : " + i);
+                int xa = i / 7;
+                int ya = i % 7;
+                g.setColor(Color.blue);
+                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
+            }
+        }
+
     }
 
 }

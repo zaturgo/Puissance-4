@@ -2,6 +2,7 @@ package Controllers;
 
 
 import Models.*;
+import Utils.GridUtils;
 import Views.GameGrid;
 import Views.GameWindow;
 
@@ -22,30 +23,30 @@ public class Game {
         _gameWindow.update();
 
     }
-    public void start(){
+    public void start() throws CloneNotSupportedException {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
-        while(game){
+       while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
                 System.out.println("Tour du joueur "+i);
-                try {
-                    //add token
-                    _grid.placeToken(tabPlayers.get(i).get_id(), tabPlayers.get(i).getAction(_grid.getTokens()));
-                } catch(Exception e) {
-                    System.out.println("Placement invalide");
+                int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
+                if(!_grid.canPlay(playerMove)) {
+                    System.out.println("Play invalid !");
+                    continue;
                 }
+                if (_grid.isWinningMove(playerMove)){
+                    //game = false;
+                    System.out.println("Joueur gagnant:"+i);
+                    //break;
+                }
+                _grid.play(playerMove);
+                _grid.toArray();
                 _gameWindow.update();
-                //check if 4 aligned
-                int result = _grid.checkWin();
-                if (result != 0){
-                    game = false;
-                    System.out.println("Joueur gagnant:"+result);
-                    break;
-                }
+                //tabPlayers.get(i).saveOpeningBook("test" + i);
             }
-        }
+       }
     }
 }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public abstract class Player {
     protected Integer _id;
-    public abstract int getAction(int[][] tokens);
+    public abstract int getAction(Grid grid);
 
     public Player(Integer _id) {
         this._id = _id;
