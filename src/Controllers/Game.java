@@ -2,6 +2,7 @@ package Controllers;
 
 
 import Models.*;
+import Views.GameGrid;
 import Views.GameWindow;
 
 import java.util.ArrayList;
@@ -9,18 +10,23 @@ import java.util.ArrayList;
 public class Game {
     private Grid _grid;
     private GameWindow _gameWindow;
+    private Player _P1;
+    private Player _P2;
 
-    public Game() {
+    public Game(Player P1, Player P2, GameWindow home) {
+        _P1 = P1;
+        _P2 = P2;
         _grid = new Grid();
-        _gameWindow = new GameWindow(_grid);
+        home.add(new GameGrid(_grid));
+        _gameWindow = home;
+        _gameWindow.update();
+
     }
     public void start(){
         boolean game = true;
-        Human p1 = new Human("Jean", 1);
-        IA_toto p2 = new IA_toto( 2);
         ArrayList<Player> tabPlayers= new ArrayList<>();
-        tabPlayers.add(p1);
-        tabPlayers.add(p2);
+        tabPlayers.add(_P1);
+        tabPlayers.add(_P2);
         //game loop, stops when game == false;
         while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
