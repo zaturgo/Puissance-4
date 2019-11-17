@@ -38,6 +38,10 @@ public class GameMenu extends JPanel {
         }
         this.setVisible(false);
         Game game = new Game(P1,P2, home);
-        game.start();
+        try {
+            game.start();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 }

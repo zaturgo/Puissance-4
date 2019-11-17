@@ -30,6 +30,12 @@ public class Game {
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
        while(game){
+//           for (int i = 0; i<_grid.toArray().length; i++){
+//                for (int j = 0; j<_grid.toArray()[i].length; j++){
+//                    System.out.print(_grid.toArray()[i][j]);
+//                }
+//               System.out.println("");
+//           }
             for (int i = 0; i<tabPlayers.size(); i++){
                 System.out.println("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
