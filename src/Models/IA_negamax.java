@@ -1,6 +1,5 @@
 package Models;
 
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 
 public class IA_negamax extends Player {
 

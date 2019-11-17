@@ -19,7 +19,7 @@ public class Game {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
 
-        tabPlayers.add(new IA_toto(1));
+        tabPlayers.add(new IA_negamax(1));
         tabPlayers.add(new Human( "pedro", 2));
         //IA_negamax test = new IA_negamax(2);
         //game loop, stops when game == false;
