@@ -59,6 +59,7 @@ public class GameMenu extends JPanel {
                     break;
             }
         }
-
+        Game.getGame().setPlayers(P1, P2);
+        home.startGame();
     }
 }
