@@ -15,7 +15,7 @@ public class IA_gogo extends Player {
         else
             _otherPlayerId = 1;
     }
-@Override
+    @Override
     public int getAction(Grid grid) {
         OldGrid grid1 = new OldGrid();
         grid1.toArray(grid);
@@ -43,11 +43,11 @@ public class IA_gogo extends Player {
             return temp;
         }
         //else random
-        Random r = new Random();
+        Random r = new Random() ;
         int col = r.nextInt(6);
-            if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
-                return col;
-            }
+        if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
+            return col;
+        }
         return -1;
     }
 

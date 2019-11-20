@@ -6,7 +6,10 @@ import Utils.GridUtils;
 import Views.GameGrid;
 import Views.GameWindow;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
     private Grid _grid;
@@ -29,6 +32,31 @@ public class Game {
     public Grid getGrid() {
         return _grid;
     }
+    public void load() {
+        try {
+            Scanner scanner = new Scanner(new File("Partie1"));
+            while (scanner.hasNextLine()) {
+                String datas[] = scanner.nextLine().split(" ");
+                _grid.setNbMoves(Integer.parseInt(datas[2]));
+                _grid.setMask(Integer.parseInt(datas[1]));
+                _grid.setBitboard(Integer.parseInt(datas[0]));
+            }
+            scanner.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void save() {
+        try {
+            PrintWriter writer = new PrintWriter("Partie1", "UTF-8");
+            writer.print(_grid.getBitboard() + " " + _grid.getMask() + " " + _grid.getNbMoves());
+            writer.close();
+        }
+        catch(Exception e) {
+            System.out.println("Erreur d'écriture dans :" + "Partie1");
+        }
+    }
     public void start() throws CloneNotSupportedException {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
@@ -36,7 +64,7 @@ public class Game {
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
         while(game){
-            for (int i = 0; i<tabPlayers.size(); i++){
+            for (int i = 0; i<tabPlayers.size(); i++) {
                 System.out.println("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
