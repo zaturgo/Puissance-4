@@ -51,21 +51,19 @@ public class OldGrid {
         // Copy to avoid modifications out of the class
         return GridUtils.copyGrid(_grid);
     }
-//    public int[][] toArray(){
-//        int[][] tab = new int [7][6];
-//        long bitboardP1 = getBitboardPlayer1();
-//        long bitboardP2 = getBitboardPlayer2();
-//        {int nbTour = 0;
-//            for (int i=6;i>=0;i--){
-//                nbTour++;
-//                for(int j=0;j<6;j++){
-//                    if(((bitboardP2>>48-(nbTour))%2)==1)
-//                        tab[i][j]=2;
-//                    if(((bitboardP1>>48-(nbTour))%2)==1)
-//                        tab[i][j]=1;
-//                    nbTour++;
-//                }
-//            }}
-//        return tab;
-//    }
+    public void toArray(Grid grid){
+        long bitboardP1 = grid.getBitboardPlayer1();
+        long bitboardP2 = grid.getBitboardPlayer2();
+        int nbTour = 0;
+        for (int i=6;i>=0;i--){
+            nbTour++;
+            for(int j=0;j<6;j++){
+                if(((bitboardP2>>48-(nbTour))%2)==1)
+                    _grid[j][i]=2;
+                if(((bitboardP1>>48-(nbTour))%2)==1)
+                    _grid[j][i]=1;
+                nbTour++;
+            }
+        }
+    }
 }

@@ -23,7 +23,6 @@ public class Game {
         home.add(_gm);
         _gameWindow = home;
         _gameWindow.update();
-
     }
     public void start() throws CloneNotSupportedException {
         boolean game = true;
@@ -40,12 +39,10 @@ public class Game {
                     continue;
                 }
                 if (_grid.isWinningMove(playerMove)){
-                    //game = false;
+                    game = false;
                     System.out.println("Joueur gagnant:"+i);
-                    //break;
                 }
                 _grid.play(playerMove);
-                _grid.toArray();
                 _gameWindow.update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
             }

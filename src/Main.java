@@ -6,13 +6,19 @@ import Models.Player;
 import Views.GameMenu;
 import Views.GameWindow;
 
+import java.awt.*;
+
 public class Main {
 
 
     public static void main(String[] args)
     {
-        GameWindow home = new GameWindow();
-        GameMenu gm = new GameMenu(home);
-        home.add(gm);
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GameWindow home = new GameWindow();
+                home.add(new GameMenu(home));
+            }
+        });
     }
 }
