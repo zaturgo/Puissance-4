@@ -85,6 +85,7 @@ public class Game {
                     GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(i+1));
                 }
                 _grid.play(playerMove);
+
                 GameWindow.getGameWindow().update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
                 if (_grid.getNbMoves()==42){

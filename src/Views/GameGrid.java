@@ -30,6 +30,7 @@ public class GameGrid extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0, 300, 0,0));
         this.add(_save);
         this.add(_menu);
+        _tour.setFont(new Font("Arial",Font.BOLD,22));
         this.add(_tour);
         this.addMouseListener(new MouseAdapter() {
             @Override

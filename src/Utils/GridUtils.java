@@ -151,7 +151,7 @@ public class GridUtils {
     ///
     static public void debugGrid(int[][] tokens) {
         // Init grid to 0
-        for (int i = 0;i < NbCol; i++) {
+        for (int i = 0;i < NbLine; i++) {
             for (int j = 0;j < tokens[i].length;j++) {
                 System.out.print(tokens[i][j]);
             }
