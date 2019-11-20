@@ -212,21 +212,5 @@ public class Grid implements Cloneable{
         System.out.println(Long.toBinaryString(mask));
     }
 
-    public long[][] toArray(){
-        long[][] tab = new long [7][6];
-        long bitboardP1 = getBitboardPlayer1();
-        long bitboardP2 = getBitboardPlayer2();
-        {int nbTour = 0;
-        for (int i=6;i>=0;i--){
-            nbTour++;
-            for(int j=0;j<6;j++){
-                if(((bitboardP2>>48-(nbTour))%2)==1)
-                    tab[i][j]=2;
-                if(((bitboardP1>>48-(nbTour))%2)==1)
-                    tab[i][j]=1;
-                nbTour++;
-            }
-        }}
-        return tab;
-    }
+
 }
