@@ -47,8 +47,8 @@ public class IA_gogo extends Player {
     ArrayList<Integer> possibleMoves = new ArrayList<>();
         for(int i = 0; i < 7; i++) {
             if(GridUtils.placeToken(_id, i, grid1.getTokens().clone()) &&
-                    GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId) != -1 &&
-                    GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId) != -1
+                    GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId) == -1 &&
+                    GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId) == -1
             ) {
                 possibleMoves.add(i);
             }

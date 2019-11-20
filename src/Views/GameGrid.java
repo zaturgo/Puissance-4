@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class GameGrid extends JPanel {
 
     private Grid _grid;
-    private JLabel _tour = new JLabel("");
+    private JLabel _tour = new JLabel("",SwingConstants.RIGHT);
     private JButton _save;
     private JButton _menu;
 
@@ -25,9 +25,10 @@ public class GameGrid extends JPanel {
         _save = new JButton("Sauvegarder");
         _menu = new JButton("Retour au menu");
         _menu.addActionListener(this::actionPerformed);
-        this.add(_tour);
+        this.setBorder(BorderFactory.createEmptyBorder(0, 300, 0,0));
         this.add(_save);
         this.add(_menu);
+        this.add(_tour);
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
