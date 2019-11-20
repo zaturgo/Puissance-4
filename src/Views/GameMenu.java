@@ -21,9 +21,9 @@ public class GameMenu extends JPanel {
         _P1Select.addActionListener(this::actionPerformed);
         _P2Select.addActionListener(this::actionPerformed);
         _startBtn.addActionListener(this::actionPerformed);
-        this.add(_startBtn);
         this.add(_P1Select);
         this.add(_P2Select);
+        this.add(_startBtn);
         this.home = home;
     }
     public void actionPerformed(ActionEvent evt) {
@@ -36,7 +36,7 @@ public class GameMenu extends JPanel {
                 e.printStackTrace();
             }
         }else{
-            switch(this._P1Select.getActionCommand()){
+            switch(this._P1Select.getSelectedItem().toString()){
                 case "IAGogo":
                     P1 = new IA_gogo(1);
                     break;
@@ -47,7 +47,7 @@ public class GameMenu extends JPanel {
                     P1 = new Human("Pedro",1);
                     break;
             }
-            switch(this._P2Select.getActionCommand()){
+            switch(this._P2Select.getSelectedItem().toString()){
                 case "IAGogo":
                     P2 = new IA_gogo(2);
                     break;

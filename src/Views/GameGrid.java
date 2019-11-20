@@ -18,7 +18,7 @@ public class GameGrid extends JPanel {
     public static int lastClickedCol = 0;
 
     public GameGrid(Grid grid) {
-        _save = new JButton("Sauvegegarder");
+        _save = new JButton("Sauvegarder");
         this.add(_tour);
         this.add(_save);
         _grid = grid;

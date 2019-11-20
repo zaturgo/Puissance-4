@@ -22,10 +22,10 @@ public class Game {
         _gm = new GameGrid(_grid);
         home.add(_gm);
         _gameWindow = home;
-        _gameWindow.update();
     }
     public void start() throws CloneNotSupportedException {
         boolean game = true;
+        _gameWindow.update();
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
@@ -40,7 +40,7 @@ public class Game {
                 }
                 if (_grid.isWinningMove(playerMove)){
                     game = false;
-                    System.out.println("Joueur gagnant:"+i);
+                    _gm.setLabelText("Joueur gagnant:"+i);
                 }
                 _grid.play(playerMove);
                 _gameWindow.update();
