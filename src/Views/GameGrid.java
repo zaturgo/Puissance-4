@@ -25,7 +25,9 @@ public class GameGrid extends JPanel {
         _save = new JButton("Sauvegarder");
         _menu = new JButton("Retour au menu");
         _menu.addActionListener(this::actionPerformed);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 350, 0,0));
+        _save.addActionListener(this::save);
+        this.add(_tour);
+        this.setBorder(BorderFactory.createEmptyBorder(0, 300, 0,0));
         this.add(_save);
         this.add(_menu);
         _tour.setFont(new Font("Arial",Font.BOLD,22));
@@ -37,10 +39,12 @@ public class GameGrid extends JPanel {
             }
         });
     }
+    private void save(ActionEvent evt) {
+        Game.getGame().save();
+    }
     public void actionPerformed(ActionEvent evt) {
         this.setVisible(false);
         GameWindow.getGameWindow().get_gm().setVisible(true);
-
     }
     public void setLabelText(String text){
         _tour.setText(text);

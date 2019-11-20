@@ -19,7 +19,7 @@ public class IA_gogo extends Player {
             _otherPlayerId = 1;
         }
     }
-@Override
+    @Override
     public int getAction(Grid grid) {
     System.out.println(_id+"/"+_otherPlayerId);
         OldGrid grid1 = new OldGrid();
@@ -71,13 +71,4 @@ public class IA_gogo extends Player {
         }
         return 1;
     }
-    public int random(OldGrid grid1){
-        int col =  r.nextInt(7);
-        if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
-            return col;
-        }else{
-            return random(grid1);
-        }
-    }
-
 }

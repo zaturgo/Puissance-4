@@ -17,6 +17,26 @@ public class Grid implements Cloneable{
 
     private int moves = 0;
 
+    ///
+    /// Functions for the load/save
+    ///
+    public long getBitboard() {
+        return bitboard;
+    }
+    public long getMask() {
+        return mask;
+    }
+
+    public void setMask(long mask) {
+        this.mask = mask;
+    }
+    public void setNbMoves(int moves) {
+        this.moves = moves;
+    }
+    public void setBitboard(long bitboard) {
+        this.bitboard = bitboard;
+    }
+
     public boolean canPlay(int col) {
         return (mask & top_mask(col)) == 0;
     }
@@ -53,7 +73,7 @@ public class Grid implements Cloneable{
         return (((long)1 << height)-1) << col*(height+1);
     }
 
-    long key()
+    public long key()
     {
         return bitboard + mask;
     }
@@ -92,7 +112,7 @@ public class Grid implements Cloneable{
     ///
     /// return a compact representation of a position on WIDTH*(HEIGHT+1) bits.
     ///
-    long getKey()
+    public long getKey()
     {
         return bitboard + mask;
     }

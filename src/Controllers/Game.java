@@ -6,7 +6,10 @@ import Utils.GridUtils;
 import Views.GameGrid;
 import Views.GameWindow;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
     private Grid _grid;
@@ -25,18 +28,48 @@ public class Game {
     public void setPlayers(Player P1, Player P2) {
         _P1 = P1;
         _P2 = P2;
+    }
+    public void reset() {
         _grid = new Grid();
     }
     public Grid getGrid() {
         return _grid;
+    }
+    public void load() {
+        try {
+            Scanner scanner = new Scanner(new File("Partie1"));
+            while (scanner.hasNextLine()) {
+                String datas[] = scanner.nextLine().split(" ");
+                _grid.setNbMoves(Integer.parseInt(datas[2]));
+                _grid.setMask(Long.parseLong(datas[1]));
+                _grid.setBitboard(Long.parseLong(datas[0]));
+                System.out.println(datas[2]);
+                System.out.println(datas[1]);
+                System.out.println(datas[0]);
+            }
+            GameWindow.getGameWindow().update();
+            scanner.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void save() {
+        try {
+            File Fileright = new File("Partie1");
+            PrintWriter writer = new PrintWriter(Fileright);
+            writer.print(_grid.getBitboard() + " " + _grid.getMask() + " " + _grid.getNbMoves());
+            writer.close();
+        }
+        catch(Exception e) {
+            System.out.println("Erreur d'écriture dans :" + "Partie1");
+        }
     }
     public void start() throws CloneNotSupportedException {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
-        int g = 0;
-        int w=0;
         //game loop, stops when game == false;
         while(game){
             for (int i = 0; i<tabPlayers.size() && game; i++){
@@ -60,7 +93,6 @@ public class Game {
                     GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
                 }
             }
-
         }
     }
 }

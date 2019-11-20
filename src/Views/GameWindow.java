@@ -21,7 +21,7 @@ public class GameWindow extends JFrame {
         this.setSize(1000, 450);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        _gm = new GameMenu(this);
+        _gm = new GameMenu();
         this.add(_gm);
     }
     public void update() {
