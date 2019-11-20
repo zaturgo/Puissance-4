@@ -29,6 +29,9 @@ public class Game {
         _P1 = P1;
         _P2 = P2;
     }
+    public void reset() {
+        _grid = new Grid();
+    }
     public Grid getGrid() {
         return _grid;
     }
@@ -38,9 +41,13 @@ public class Game {
             while (scanner.hasNextLine()) {
                 String datas[] = scanner.nextLine().split(" ");
                 _grid.setNbMoves(Integer.parseInt(datas[2]));
-                _grid.setMask(Integer.parseInt(datas[1]));
-                _grid.setBitboard(Integer.parseInt(datas[0]));
+                _grid.setMask(Long.parseLong(datas[1]));
+                _grid.setBitboard(Long.parseLong(datas[0]));
+                System.out.println(datas[2]);
+                System.out.println(datas[1]);
+                System.out.println(datas[0]);
             }
+            GameWindow.getGameWindow().update();
             scanner.close();
         }
         catch(Exception e) {
@@ -49,7 +56,8 @@ public class Game {
     }
     public void save() {
         try {
-            PrintWriter writer = new PrintWriter("Partie1", "UTF-8");
+            File Fileright = new File("Partie1");
+            PrintWriter writer = new PrintWriter(Fileright);
             writer.print(_grid.getBitboard() + " " + _grid.getMask() + " " + _grid.getNbMoves());
             writer.close();
         }
@@ -64,7 +72,7 @@ public class Game {
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
         while(game){
-            for (int i = 0; i<tabPlayers.size(); i++) {
+            for (int i = 0; i<tabPlayers.size() && game; i++) {
                 System.out.println("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
@@ -73,12 +81,12 @@ public class Game {
                 }
                 if (_grid.isWinningMove(playerMove)){
                     game = false;
-                    System.out.println("Joueur gagnant:"+i);
                 }
                 _grid.play(playerMove);
                 GameWindow.getGameWindow().update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
+                GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(i+1));
             }
-       }
+        }
     }
 }

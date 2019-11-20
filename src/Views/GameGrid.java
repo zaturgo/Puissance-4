@@ -6,6 +6,7 @@ import Utils.GridUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,11 +14,21 @@ import java.util.ArrayList;
 public class GameGrid extends JPanel {
 
     private Grid _grid;
+    private JLabel _tour = new JLabel("");
+    private JButton _save;
+    private JButton _menu;
 
     public static int lastClickedCol = 0;
 
     public GameGrid() {
         _grid = Game.getGame().getGrid();
+        _save = new JButton("Sauvegarder");
+        _menu = new JButton("Retour au menu");
+        _menu.addActionListener(this::actionPerformed);
+        _save.addActionListener(this::save);
+        this.add(_tour);
+        this.add(_save);
+        this.add(_menu);
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -25,7 +36,17 @@ public class GameGrid extends JPanel {
             }
         });
     }
-
+    private void save(ActionEvent evt) {
+        Game.getGame().save();
+    }
+    public void actionPerformed(ActionEvent evt) {
+        this.setVisible(false);
+        GameWindow.getGameWindow().get_gm().setVisible(true);
+    }
+    public void setLabelText(String text){
+        _tour.setText(text);
+        this.repaint();
+    }
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int size = 64;
