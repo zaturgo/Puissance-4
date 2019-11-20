@@ -16,8 +16,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                GameWindow home = new GameWindow();
-                home.add(new GameMenu(home));
+                GameWindow.getGameWindow();
             }
         });
     }

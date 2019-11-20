@@ -10,17 +10,24 @@ import java.util.ArrayList;
 
 public class Game {
     private Grid _grid;
-    private GameWindow _gameWindow;
     private Player _P1;
     private Player _P2;
+    private static Game _instance;
+    static public Game getGame() {
+        if(_instance == null)
+            _instance = new Game();
+        return _instance;
+    }
 
-    public Game(Player P1, Player P2, GameWindow home) {
+    private Game() {
+        _grid = new Grid();
+    }
+    public void setPlayers(Player P1, Player P2) {
         _P1 = P1;
         _P2 = P2;
-        _grid = new Grid();
-        home.add(new GameGrid(_grid));
-        _gameWindow = home;
-        _gameWindow.update();
+    }
+    public Grid getGrid() {
+        return _grid;
     }
     public void start() throws CloneNotSupportedException {
         boolean game = true;
@@ -28,7 +35,7 @@ public class Game {
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
-       while(game){
+        while(game){
             for (int i = 0; i<tabPlayers.size(); i++){
                 System.out.println("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
@@ -41,7 +48,7 @@ public class Game {
                     System.out.println("Joueur gagnant:"+i);
                 }
                 _grid.play(playerMove);
-                _gameWindow.update();
+                GameWindow.getGameWindow().update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
             }
        }

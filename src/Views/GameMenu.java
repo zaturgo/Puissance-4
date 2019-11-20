@@ -10,8 +10,6 @@ public class GameMenu extends JPanel {
     private JButton _IAIA = new JButton("AI Versus");
     private JButton _IAPlayer= new JButton("Human VS AI");
     private JButton _PlayerPlayer= new JButton("Player Versus");
-    private static Player P2 ;
-    private static Player P1;
     private static GameWindow home;
     public GameMenu(GameWindow home) {
         _IAIA.addActionListener(this::actionPerformed);
@@ -23,25 +21,22 @@ public class GameMenu extends JPanel {
         this.home = home;
     }
     public void actionPerformed(ActionEvent evt) {
+        Player P1;
+        Player P2;
         if (evt.getActionCommand().equals("AI Versus")){
             System.out.println("AI VS AI");
             P1 = new IA_gogo(1);
             P2 = new IA_gogo(2);
-        }else if (evt.getActionCommand().equals("Human VS AI")){
+        } else if (evt.getActionCommand().equals("Human VS AI")){
             System.out.println("Human VS AI");
             P1 = new IA_gogo(1);
             P2 = new Human("toto", 2);
-        }else{
+        } else {
             System.out.println("Human VS Human");
             P1 = new Human("tutu", 1);
             P2 = new Human("toto", 2);
         }
-        this.setVisible(false);
-        Game game = new Game(P1,P2, home);
-        try {
-            game.start();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        Game.getGame().setPlayers(P1, P2);
+        home.startGame();
     }
 }

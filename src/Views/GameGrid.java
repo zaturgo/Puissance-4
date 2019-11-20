@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.Game;
 import Models.Grid;
 import Utils.GridUtils;
 
@@ -15,8 +16,8 @@ public class GameGrid extends JPanel {
 
     public static int lastClickedCol = 0;
 
-    public GameGrid(Grid grid) {
-        _grid = grid;
+    public GameGrid() {
+        _grid = Game.getGame().getGrid();
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
