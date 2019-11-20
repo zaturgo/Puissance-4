@@ -82,7 +82,7 @@ public class Game {
                 }
                 if (_grid.isWinningMove(playerMove)){
                     game = false;
-                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(w+1));
+                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(i+1));
                 }
                 _grid.play(playerMove);
                 GameWindow.getGameWindow().update();
