@@ -29,12 +29,8 @@ public class GameMenu extends JPanel {
     public void actionPerformed(ActionEvent evt) {
         if (evt.getActionCommand().equals("Start")){
             this.setVisible(false);
-            Game game = new Game(P1,P2, home);
-            try {
-                game.start();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            Game.getGame().setPlayers(P1, P2);
+            home.startGame();
         }else{
             switch(this._P1Select.getSelectedItem().toString()){
                 case "IAGogo":
@@ -59,7 +55,6 @@ public class GameMenu extends JPanel {
                     break;
             }
         }
-        Game.getGame().setPlayers(P1, P2);
-        home.startGame();
+
     }
 }

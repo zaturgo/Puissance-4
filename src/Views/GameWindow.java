@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class GameWindow extends JFrame {
     private GameMenu _gm;
+    private GameGrid _gg;
     private static GameWindow _instance;
     public static GameWindow getGameWindow() {
         if(_instance == null)
@@ -28,8 +29,18 @@ public class GameWindow extends JFrame {
         this.validate();
         this.repaint();
     }
+
+    public GameGrid get_gg() {
+        return _gg;
+    }
+
+    public GameMenu get_gm() {
+        return _gm;
+    }
+
     public void startGame() {
-        this.add(new GameGrid());
+        _gg = new GameGrid();
+        this.add(_gg);
         _gm.setVisible(false);
         _gm.repaint();
         this.update();

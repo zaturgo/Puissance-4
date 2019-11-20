@@ -6,6 +6,7 @@ import Utils.GridUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -15,20 +16,29 @@ public class GameGrid extends JPanel {
     private Grid _grid;
     private JLabel _tour = new JLabel("");
     private JButton _save;
+    private JButton _menu;
 
     public static int lastClickedCol = 0;
 
     public GameGrid() {
         _grid = Game.getGame().getGrid();
         _save = new JButton("Sauvegarder");
+        _menu = new JButton("Retour au menu");
+        _menu.addActionListener(this::actionPerformed);
         this.add(_tour);
         this.add(_save);
+        this.add(_menu);
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GameGrid.lastClickedCol = e.getX()/64;
             }
         });
+    }
+    public void actionPerformed(ActionEvent evt) {
+        this.setVisible(false);
+        GameWindow.getGameWindow().get_gm().setVisible(true);
+
     }
     public void setLabelText(String text){
         _tour.setText(text);
