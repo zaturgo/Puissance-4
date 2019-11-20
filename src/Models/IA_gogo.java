@@ -3,6 +3,7 @@ package Models;
 import Models.Player;
 import Utils.GridUtils;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class IA_gogo extends Player {
@@ -40,11 +41,22 @@ public class IA_gogo extends Player {
 
         //check if two aligned to put a third
         temp = GridUtils.threeAligned(grid1.getTokens(),_id);
-        if (temp!=-1){
+        if (temp!=-1&& GridUtils.opponentNotWinningNextTurn(grid1.getTokens(), temp, _id,_otherPlayerId)) {
             return temp;
         }
-        //else random
-        return random(grid1);
+    ArrayList<Integer> possibleMoves = new ArrayList<>();
+        for(int i = 0; i < 7; i++) {
+            if(GridUtils.placeToken(_id, i, grid1.getTokens().clone()) &&
+                    GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId) != -1 &&
+                    GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId) != -1
+            ) {
+                possibleMoves.add(i);
+            }
+        }
+        if(possibleMoves.size() > 0)
+            return possibleMoves.get(r.nextInt(possibleMoves.size()));
+        return 1;
+
     }
     public int random(OldGrid grid1){
         int col =  r.nextInt(7);

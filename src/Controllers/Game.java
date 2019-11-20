@@ -44,6 +44,7 @@ public class Game {
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
                     System.out.println("Play invalid !");
+                    i--;
                     continue;
                 }
                 if (_grid.isWinningMove(playerMove)){
