@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Game {
     private Grid _grid;
     private GameWindow _gameWindow;
+    private GameGrid _gm;
     private Player _P1;
     private Player _P2;
 
@@ -18,7 +19,8 @@ public class Game {
         _P1 = P1;
         _P2 = P2;
         _grid = new Grid();
-        home.add(new GameGrid(_grid));
+        _gm = new GameGrid(_grid);
+        home.add(_gm);
         _gameWindow = home;
         _gameWindow.update();
 
@@ -30,14 +32,8 @@ public class Game {
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
        while(game){
-//           for (int i = 0; i<_grid.toArray().length; i++){
-//                for (int j = 0; j<_grid.toArray()[i].length; j++){
-//                    System.out.print(_grid.toArray()[i][j]);
-//                }
-//               System.out.println("");
-//           }
             for (int i = 0; i<tabPlayers.size(); i++){
-                System.out.println("Tour du joueur "+i);
+                _gm.setLabelText("Tour du joueur "+i);
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
                     System.out.println("Play invalid !");

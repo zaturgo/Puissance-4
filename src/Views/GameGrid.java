@@ -12,10 +12,15 @@ import java.util.ArrayList;
 public class GameGrid extends JPanel {
 
     private Grid _grid;
+    private JLabel _tour = new JLabel("");
+    private JButton _save;
 
     public static int lastClickedCol = 0;
 
     public GameGrid(Grid grid) {
+        _save = new JButton("Sauvegegarder");
+        this.add(_tour);
+        this.add(_save);
         _grid = grid;
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -24,7 +29,10 @@ public class GameGrid extends JPanel {
             }
         });
     }
-
+    public void setLabelText(String text){
+        _tour.setText(text);
+        this.repaint();
+    }
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int size = 64;

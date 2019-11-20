@@ -10,6 +10,10 @@ public class Human extends Player {
         this._name = _name;
     }
 
+    public String get_name() {
+        return _name;
+    }
+
     @Override
     public int getAction(Grid grid) {
         GameGrid.lastClickedCol = -1;
