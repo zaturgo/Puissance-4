@@ -136,7 +136,6 @@ public class GridUtils {
     }
     ///
     /// Place the token in the grid
-    /// If the token can't be placed, throw an InvalidArgumentException
     ///
     static public boolean placeToken(int playerId, int col, int[][] tokens) {
         for(int i = tokens.length-1; i >= 0; --i) {
@@ -195,5 +194,11 @@ public class GridUtils {
                 return i;
         }
         return -1;
+    }
+    static public boolean opponentNotWinningNextTurn(int[][] tokens,int col, int playerId, int oplayerId) {
+            int[][] tempGrid = GridUtils.copyGrid(tokens);
+            GridUtils.placeToken(playerId, col, tempGrid);
+            if (GridUtils.getNbPossibleWin(tempGrid, oplayerId) >= 1) return false;
+            return true;
     }
 }

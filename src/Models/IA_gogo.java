@@ -3,10 +3,12 @@ package Models;
 import Models.Player;
 import Utils.GridUtils;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class IA_gogo extends Player {
     private int _otherPlayerId;
+    private Random r = new Random();
     private int _lastPlayChoose = 2; // Starts to 2 so we'll place it in the middle if we start
     public IA_gogo(Integer _id) {
         super(_id);
@@ -39,16 +41,21 @@ public class IA_gogo extends Player {
 
         //check if two aligned to put a third
         temp = GridUtils.threeAligned(grid1.getTokens(),_id);
-        if (temp!=-1){
+        if (temp!=-1&& GridUtils.opponentNotWinningNextTurn(grid1.getTokens(), temp, _id,_otherPlayerId)) {
             return temp;
         }
-        //else random
-        Random r = new Random() ;
-        int col = r.nextInt(6);
-        if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
-            return col;
+    ArrayList<Integer> possibleMoves = new ArrayList<>();
+        for(int i = 0; i < 7; i++) {
+            if(GridUtils.placeToken(_id, i, grid1.getTokens().clone()) &&
+                    GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId) == -1 &&
+                    GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId) == -1
+            ) {
+                possibleMoves.add(i);
+            }
         }
-        return -1;
-    }
+        if(possibleMoves.size() > 0)
+            return possibleMoves.get(r.nextInt(possibleMoves.size()));
+        return 1;
 
+    }
 }
