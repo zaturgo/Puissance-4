@@ -59,9 +59,9 @@ public class OldGrid {
             nbTour++;
             for(int j=0;j<6;j++){
                 if(((bitboardP2>>48-(nbTour))%2)==1)
-                    _grid[j][i]=2;
-                if(((bitboardP1>>48-(nbTour))%2)==1)
                     _grid[j][i]=1;
+                if(((bitboardP1>>48-(nbTour))%2)==1)
+                    _grid[j][i]=2;
                 nbTour++;
             }
         }
