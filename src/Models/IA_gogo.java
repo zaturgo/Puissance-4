@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class IA_gogo extends Player {
     private int _otherPlayerId;
+    private Random r = new Random();
     private int _lastPlayChoose = 2; // Starts to 2 so we'll place it in the middle if we start
     public IA_gogo(Integer _id) {
         super(_id);
@@ -43,12 +44,15 @@ public class IA_gogo extends Player {
             return temp;
         }
         //else random
-        Random r = new Random();
-        int col = r.nextInt(6);
-            if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
-                return col;
-            }
-        return -1;
+        return random(grid1);
+    }
+    public int random(OldGrid grid1){
+        int col =  r.nextInt(7);
+        if(GridUtils.placeToken(_id, col, grid1.getTokens())) {
+            return col;
+        }else{
+            return random(grid1);
+        }
     }
 
 }

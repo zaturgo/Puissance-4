@@ -39,12 +39,7 @@ public class Game {
         int w=0;
         //game loop, stops when game == false;
         while(game){
-            if (g==42){
-                game = false;//to avoid equalities
-                GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
-            }
-            for (int i = 0; i<tabPlayers.size(); i++){
-                g++;
+            for (int i = 0; i<tabPlayers.size() && game; i++){
                 GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+(i+1));
                 int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
@@ -52,14 +47,18 @@ public class Game {
                     continue;
                 }
                 if (_grid.isWinningMove(playerMove)){
-                    w = i;
                     game = false;
+                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(w+1));
                 }
                 _grid.play(playerMove);
                 GameWindow.getGameWindow().update();
                 //tabPlayers.get(i).saveOpeningBook("test" + i);
+                if (_grid.getNbMoves()==42){
+                    game = false;
+                    GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
+                }
             }
-            GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(w+1));
+
         }
     }
 }
