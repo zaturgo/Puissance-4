@@ -5,9 +5,6 @@ public class Grid implements Cloneable{
     {
         return super.clone();
     }
-    ///
-    ///
-    ///
     private long bitboard = 0;
     private long mask = 0;
     public final int height = 6;
