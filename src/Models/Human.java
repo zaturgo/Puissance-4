@@ -32,6 +32,7 @@ public class Human extends Player {
 
             }
         }
+        GameWindow.getGameWindow().get_gg().setHumanListener(null);
         return _clickedCol;
     }
 }
