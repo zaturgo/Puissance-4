@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.Game;
 import Models.Grid;
+import Models.Human;
 import Utils.GridUtils;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class GameGrid extends JPanel {
     private JLabel _tour = new JLabel("",SwingConstants.RIGHT);
     private JButton _save;
     private JButton _menu;
+    private MouseAdapter _ma;
+    private Human _human;
 
     public static int lastClickedCol = 0;
 
@@ -32,12 +35,17 @@ public class GameGrid extends JPanel {
         this.add(_menu);
         _tour.setFont(new Font("Arial",Font.BOLD,22));
         this.add(_tour);
-        this.addMouseListener(new MouseAdapter() {
+        _ma = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                GameGrid.lastClickedCol = e.getX()/64;
+                if(_human != null)
+                    _human.clickCol(e.getX()/64);
             }
-        });
+        };
+        this.addMouseListener(_ma);
+    }
+    public void setHumanListener(Human human) {
+        _human = human;
     }
     private void save(ActionEvent evt) {
         Game.getGame().save();

@@ -72,26 +72,20 @@ public class Game {
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
         while(game){
-            for (int i = 0; i<tabPlayers.size() && game; i++){
-                GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+(i+1));
-                int playerMove = tabPlayers.get(i).getAction((Grid)_grid.clone());
-                if(!_grid.canPlay(playerMove)) {
-                    System.out.println("Play invalid !");
-                    i--;
-                    continue;
-                }
-                if (_grid.isWinningMove(playerMove)){
-                    game = false;
-                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(i+1));
-                }
-                _grid.play(playerMove);
-
-                GameWindow.getGameWindow().update();
-                //tabPlayers.get(i).saveOpeningBook("test" + i);
-                if (_grid.getNbMoves()==42){
-                    game = false;
-                    GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
-                }
+            GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));
+            int playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());
+            if(!_grid.canPlay(playerMove)) {
+                System.out.println("Coup invalide !");
+                continue;
+            }
+            if (_grid.isWinningMove(playerMove)){
+                game = false;
+                GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+((_grid.getNbMoves()%2)+1));
+            }
+            _grid.play(playerMove);
+            if (_grid.getNbMoves()==42){
+                game = false;
+                GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
             }
         }
     }

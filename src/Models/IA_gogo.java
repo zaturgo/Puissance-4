@@ -6,6 +6,8 @@ import Utils.GridUtils;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class IA_gogo extends Player {
     private int _otherPlayerId;
     private Random r = new Random();
@@ -21,7 +23,13 @@ public class IA_gogo extends Player {
     }
     @Override
     public int getAction(Grid grid) {
-    System.out.println(_id+"/"+_otherPlayerId);
+        try {
+            sleep(1000);
+        }
+        catch(Exception e) {
+            
+        }
+        System.out.println(_id+"/"+_otherPlayerId);
         OldGrid grid1 = new OldGrid();
         grid1.toArray(grid);
 //        GridUtils.debugGrid(grid1.getTokens());
