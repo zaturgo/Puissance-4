@@ -75,7 +75,7 @@ public class Game {
         while(game){
             System.out.println("=====");
             System.out.println(_grid.getNbMoves()%2);
-                GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+(_grid.getNbMoves()%2));
+                GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));
                 int playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());
                 if(!_grid.canPlay(playerMove)) {
                     System.out.println("Play invalid !");
@@ -85,7 +85,7 @@ public class Game {
                     System.out.println("Partie gagnée");
                     game = false;
                     System.out.println(game);
-                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+(_grid.getNbMoves()%2));
+                    GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+((_grid.getNbMoves()%2)+1));
                 }
                 _grid.play(playerMove);
 
