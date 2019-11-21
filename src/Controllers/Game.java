@@ -71,6 +71,7 @@ public class Game {
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
         //game loop, stops when game == false;
+        System.out.println("NEW GAME");
         while(game){
             GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));
             int playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());

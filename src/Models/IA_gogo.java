@@ -27,40 +27,39 @@ public class IA_gogo extends Player {
             sleep(1000);
         }
         catch(Exception e) {
-            
         }
-        System.out.println(_id+"/"+_otherPlayerId);
+    //System.out.println(_id+"/"+_otherPlayerId);
         OldGrid grid1 = new OldGrid();
         grid1.toArray(grid);
 //        GridUtils.debugGrid(grid1.getTokens());
         // First, let's see if we can win
         int temp = GridUtils.getWinnableCol(grid1.getTokens(), _id);
         if(temp != -1) {
-            System.out.println("coup gagnant"+_id);
+            //System.out.println("coup gagnant"+_id);
             return temp;
         }
         // Then, let's see if the other player can win next turn
         temp = GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId);
         if(temp != -1) {
-            System.out.println("block");
+            //System.out.println("block");
             return temp;
         }
         // Then, let's see if we can create an unavoidable win next turn
         temp = GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _id);
         if(temp != -1) {
-            System.out.println("coup inevitable"+_id);
+            //System.out.println("coup inevitable"+_id);
             return temp;
         }
         // Same for the other player
         temp = GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId);
         if(temp != -1) {
-            System.out.println(_id+"block coup inevitable"+_otherPlayerId);
+            //System.out.println(_id+"block coup inevitable"+_otherPlayerId);
             return temp;
         }
         //check if two aligned to put a third
         temp = GridUtils.threeAligned(grid1.getTokens(),_id);
         if (temp!=-1&& GridUtils.opponentNotWinningNextTurn(grid1.getTokens(), temp, _id,_otherPlayerId)) {
-            System.out.println("Trois alignés"+_id);
+            //System.out.println("Trois alignés"+_id);
             return temp;
         }
         ArrayList<Integer> possibleMoves = new ArrayList<>();
@@ -74,7 +73,7 @@ public class IA_gogo extends Player {
             }
         }
         if(possibleMoves.size() > 0) {
-            System.out.println("random");
+            //System.out.println("random");
             return possibleMoves.get(r.nextInt(possibleMoves.size()));
         }
         return 1;
