@@ -24,7 +24,7 @@ public class IA_gogo extends Player {
     @Override
     public int getAction(Grid grid) {
         try {
-            sleep(1000);
+            //sleep(1000);
         }
         catch(Exception e) {
         }

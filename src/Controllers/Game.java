@@ -70,6 +70,7 @@ public class Game {
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(_P1);
         tabPlayers.add(_P2);
+
         //game loop, stops when game == false;
         System.out.println("NEW GAME");
         while(game){
@@ -83,11 +84,16 @@ public class Game {
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+((_grid.getNbMoves()%2)+1));
             }
+            System.out.println("    Coup de : " + _grid.getNbMoves()%2 + " : " + playerMove);
             _grid.play(playerMove);
             if (_grid.getNbMoves()==42){
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
             }
+            IA_negamax tempIA = (IA_negamax) tabPlayers.get(0);
+            tempIA.saveOpeningBook("test6.txt");// En bleu
+            tempIA = (IA_negamax) tabPlayers.get(1);
+            tempIA.saveOpeningBook("test7.txt");// En rouge
         }
     }
 }
