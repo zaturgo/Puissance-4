@@ -30,7 +30,7 @@ public class GameGrid extends JPanel {
         _menu.addActionListener(this::actionPerformed);
         _save.addActionListener(this::save);
         this.add(_tour);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 300, 0,0));
+        this.setBorder(BorderFactory.createEmptyBorder(0, 350, 0,0));
         this.add(_save);
         this.add(_menu);
         _tour.setFont(new Font("Arial",Font.BOLD,22));
