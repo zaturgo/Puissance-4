@@ -8,10 +8,13 @@ public class IA_negamax extends Player {
     private int[] columnOrder = {3, 4, 2, 5, 1, 6, 0};// initialize the column exploration order, starting with center columns
     private long nodecount = 0;
     private long bestMove = 0;
+    private long thebestmove = 0;
 
     public IA_negamax(Integer _id) {
         super(_id);
         _transTable = new TranspositionTable(8388593); //8388593 prime = 64MB of transposition table
+        _openingBook.load("test4.txt");
+        _openingBook.load("test5.txt");
     }
 
     public void saveOpeningBook(String filePath) {
@@ -20,32 +23,22 @@ public class IA_negamax extends Player {
 
     @Override
     public int getAction(Grid grid) {
+        if(_openingBook.get(grid.getKey(), (short)grid.getNbMoves()) != 9999)
+            return _openingBook.get(grid.getKey(), (short)grid.getNbMoves());
         for (int i = 0; i < 7; i ++) {
             if(grid.isWinningMove(columnOrder[i]))
                 return columnOrder[i];
         }
         try {
-            int temp = solve(grid, true);
-            System.out.println(Long.toBinaryString(bestMove));
-            return 1;
-        }
-        catch(Exception e) {
-            return 0;
-        }
-            /*
-        try {
             int min = 1000;
-            int minMove = 0;
+            int minMove = -1;
+            long debut = System.currentTimeMillis();
             for (int i = 0; i < 7; i ++) {
-                long debut = System.currentTimeMillis();
                 Grid tempGrid = (Grid)grid.clone();
                 if(tempGrid.canPlay(columnOrder[i])) {
                     tempGrid.play(columnOrder[i]);
-                    int temp = solve(tempGrid, true);
-                    System.out.println("Temps : " + (System.currentTimeMillis()-debut));
-                    if(System.currentTimeMillis()-debut > 10000) { // If time is higher than 30s, we store this position
-                        _openingBook.add(tempGrid.getKey(), (short)temp, (short)tempGrid.getNbMoves());
-                    }
+                    int temp = solve(tempGrid, false);
+                    System.out.println("Temps : (" + i +") " + (System.currentTimeMillis()-debut));
                     //System.out.println(columnOrder[i] + " : " + temp);
                     if (temp < min) {
                         min = temp;
@@ -53,15 +46,48 @@ public class IA_negamax extends Player {
                     }
                 }
             }
+            if(System.currentTimeMillis()-debut > 10000) { // If time is higher than 30s, we store this position
+                System.out.println("Sauvegarde");
+                _openingBook.add(grid.getKey(), (short)minMove, (short)grid.getNbMoves());
+            }
             return minMove;// weak version
         }
         catch(Exception e)
         {
             return 0;
+        }
+        /*try {
+            long debut = System.currentTimeMillis();
+            int score = solve(grid, true);
+            //System.out.println(Long.toBinaryString(bestMove));
+            for(int i = 0; i < 64; i++) {
+                if((thebestmove >> i)%2 == 1) {
+                    System.out.println("=======");
+                    System.out.println("Le coup :" + (i / 7));
+                    System.out.println("Le score :" + score);
+                    System.out.println("Le temps : " + (System.currentTimeMillis()-debut));
+                    if(System.currentTimeMillis()-debut > 5000) { // If time is higher than 5s, we store this position
+                        _openingBook.add(grid.getKey(), (short)(i/7), (short) grid.getNbMoves());
+                        System.out.println("Sauvegarde");
+                    }
+                    return i / 7;
+                }
+            }
+            System.out.println("Error");
+            return 1;
+        }
+        catch(Exception e) {
+            return 0;
         }*/
     }
     public int solve(Grid grid, boolean weak) throws CloneNotSupportedException
     {
+        for (int i = 0; i < 7; i ++) {
+            if(grid.isWinningMove(columnOrder[i]))
+                return (grid.width*grid.height+1 - grid.getNbMoves())/2;
+        }
+        bestMove = 0;
+        thebestmove = 0;
         nodecount = 0;
         //System.out.println(nodecount);
         _transTable = new TranspositionTable(8388593);
@@ -71,7 +97,6 @@ public class IA_negamax extends Player {
             min = -1;
             max = 1;
         }
-
         while(min < max) {                    // iteratively narrow the min-max exploration window
             int med = min + (max - min)/2;
             if(med <= 0 && min/2 < med)
@@ -83,11 +108,12 @@ public class IA_negamax extends Player {
                 max = r;
             else
                 min = r;
+            //System.out.println(min +" " + max + " " + bestMove);
         }
         return min;
     }
     public int negamax(Grid grid, int alpha, int beta) throws CloneNotSupportedException {
-        nodecount++; // increment counter of explored nodes
+        //nodecount++; // increment counter of explored nodes
 
         long next = grid.possibleNonLosingMoves();
         //System.out.println(next);
@@ -120,25 +146,26 @@ public class IA_negamax extends Player {
         for(int i = grid.width -1; i>=0; i--) {
             long move = next & grid.column_mask(columnOrder[i]);
             if (move != 0)
-               moves.add(move, grid.moveScore(move));
+                moves.add(move, grid.moveScore(move));
         }
         long next2 = moves.getNext();
-        if(nodecount == 1)
-            bestMove = next2;
+        bestMove = next2;
         while(next2 != 0) {
-            Grid grid2 = (Grid)grid.clone();
+            Grid grid2 = (Grid) grid.clone();
             grid2.play(next2);  // It's opponent turn in P2 position after current player plays x column.
             int score = -negamax(grid2, -beta, -alpha); // explore opponent's score within [-beta;-alpha] windows:
             // no need to have good precision for score better than beta (opponent's score worse than -beta)
             // no need to check for score worse than alpha (opponent's score worse better than -alpha)
 
-            if(score >= beta) {
+            if (score >= beta) {
+                bestMove = next2;
                 return score;  // prune the exploration if we find a possible move better than what we were looking for.
             }
-            if(score > alpha) {
+            if (score > alpha) {
                 alpha = score; // reduce the [alpha;beta] window for next exploration, as we only
             }
             // need to search for a position that is better than the best so far.
+            bestMove = next2;
             next2 = moves.getNext();
         }
         _transTable.put(grid.key(), (short)(alpha - grid.MIN_SCORE + 1)); // save the upper bound of the position
