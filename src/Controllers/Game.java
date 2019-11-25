@@ -11,18 +11,21 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Game {
+public class Game extends Thread {
     private Grid _grid;
     private Player _P1;
     private Player _P2;
     private static Game _instance;
+    private volatile boolean _stopGame = false;
     static public Game getGame() {
         if(_instance == null)
             _instance = new Game();
         return _instance;
     }
-
-    private Game() {
+    public void stopGame() {
+        _stopGame = true;
+    }
+    public Game() {
         _grid = new Grid();
     }
     public void setPlayers(Player P1, Player P2) {
@@ -65,7 +68,9 @@ public class Game {
             System.out.println("Erreur d'écriture dans :" + "Partie1");
         }
     }
-    public void start() throws CloneNotSupportedException {
+
+    @Override
+    public void run() {
         boolean game = true;
         ArrayList<Player> tabPlayers= new ArrayList<>();
         tabPlayers.add(_P1);
@@ -73,9 +78,15 @@ public class Game {
 
         //game loop, stops when game == false;
         System.out.println("NEW GAME");
-        while(game){
+        while(game && !_stopGame){
             GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));
-            int playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());
+            int playerMove = -1;
+            try {
+                playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
             if(!_grid.canPlay(playerMove)) {
                 System.out.println("Coup invalide !");
                 continue;

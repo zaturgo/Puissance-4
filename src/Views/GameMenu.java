@@ -1,6 +1,5 @@
 package Views;
 
-import Controllers.Game;
 import Models.*;
 
 import javax.swing.*;
@@ -12,14 +11,12 @@ public class GameMenu extends JPanel {
     private JButton _startBtn = new JButton("Start");
     private JButton _loadBtn = new JButton("Charger");
 
-    private static Player P2 =new IA_gogo(2);;
-    private static Player P1=new IA_gogo(1);;
     public GameMenu() {
-        Object[] elements = new Object[]{"IAGogo", "IAnegamax", "Humain"};
+        Object[] elements = new Object[]{new IA_gogo(1), new IA_negamax(1), new Human(2)};
         _P1Select = new JComboBox(elements);
+        elements = new Object[]{new IA_gogo(2), new IA_negamax(2), new Human(2)};
         _P2Select = new JComboBox(elements);
-        _P1Select.addActionListener(this::changePlayer);
-        _P2Select.addActionListener(this::changePlayer);
+
         _startBtn.addActionListener(this::startClicked);
         _loadBtn.addActionListener(this::load);
         this.add(_P1Select);
@@ -28,38 +25,9 @@ public class GameMenu extends JPanel {
         this.add(_loadBtn);
     }
     private void startClicked(ActionEvent evt) {
-        this.setVisible(false);
-        Game.getGame().reset();
-        Game.getGame().setPlayers(P1, P2);
-        GameWindow.getGameWindow().startGame();
+        GameWindow.getGameWindow().startGame((Player)_P1Select.getSelectedItem(), (Player)_P2Select.getSelectedItem());
     }
     private void load(ActionEvent evt) {
-        Game.getGame().load();
-        Game.getGame().setPlayers(P1, P2);
-        GameWindow.getGameWindow().startGame();
-    }
-    private void changePlayer(ActionEvent evt) {
-        switch(this._P1Select.getSelectedItem().toString()){
-            case "IAGogo":
-                P1 = new IA_gogo(1);
-                break;
-            case"IAnegamax":
-                P1 = new IA_negamax(1);
-                break;
-            case"Humain":
-                P1 = new Human("Pedro",1);
-                break;
-        }
-        switch(this._P2Select.getSelectedItem().toString()){
-            case "IAGogo":
-                P2 = new IA_gogo(2);
-                break;
-            case"IAnegamax":
-                P2 = new IA_negamax(2);
-                break;
-            case"Humain":
-                P2 = new Human("Rico",2);
-                break;
-        }
+        GameWindow.getGameWindow().loadGame((Player)_P1Select.getSelectedItem(), (Player)_P2Select.getSelectedItem());
     }
 }

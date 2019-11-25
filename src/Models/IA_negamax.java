@@ -22,6 +22,11 @@ public class IA_negamax extends Player {
     }
 
     @Override
+    public String toString() {
+        return "Negamax";
+    }
+
+    @Override
     public int getAction(Grid grid) {
         if(_openingBook.get(grid.getKey(), (short)grid.getNbMoves()) != 9999)
             return _openingBook.get(grid.getKey(), (short)grid.getNbMoves());

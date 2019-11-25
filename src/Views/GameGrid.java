@@ -2,7 +2,6 @@ package Views;
 
 import Controllers.Game;
 import Models.Grid;
-import Models.Human;
 import Utils.GridUtils;
 
 import javax.swing.*;
@@ -10,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class GameGrid extends JPanel {
 
@@ -21,8 +19,8 @@ public class GameGrid extends JPanel {
     private MouseAdapter _ma;
     public static int lastClickedCol = 0;
 
-    public GameGrid() {
-        _grid = Game.getGame().getGrid();
+    public GameGrid(Grid grid) {
+        _grid = grid;
         _save = new JButton("Sauvegarder");
         _menu = new JButton("Retour au menu");
         _menu.addActionListener(this::actionPerformed);
@@ -44,8 +42,7 @@ public class GameGrid extends JPanel {
         Game.getGame().save();
     }
     public void actionPerformed(ActionEvent evt) {
-        this.setVisible(false);
-        GameWindow.getGameWindow().get_gm().setVisible(true);
+        GameWindow.getGameWindow().startMenu();
     }
     public void setLabelText(String text){
         _tour.setText(text);

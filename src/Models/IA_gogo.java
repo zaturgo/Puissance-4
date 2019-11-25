@@ -22,6 +22,10 @@ public class IA_gogo extends Player {
         }
     }
     @Override
+    public String toString() {
+        return "Gogo";
+    }
+    @Override
     public int getAction(Grid grid) {
         try {
             sleep(1000);
