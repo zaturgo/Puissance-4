@@ -11,7 +11,7 @@ public class Human extends Player {
         return "Joueur";
     }
     @Override
-    public int getAction(Grid grid) {
+    public int getAction(Grid grid) {//get click from frame
         GameGrid.lastClickedCol = -1;
         while(GameGrid.lastClickedCol <= -1 || GameGrid.lastClickedCol >= 7) {
             try {

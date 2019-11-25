@@ -195,6 +195,7 @@ public class GridUtils {
         }
         return -1;
     }
+    //checks if opponent winning in the next turn
     static public boolean opponentNotWinningNextTurn(int[][] tokens,int col, int playerId, int oplayerId) {
             int[][] tempGrid = GridUtils.copyGrid(tokens);
             GridUtils.placeToken(playerId, col, tempGrid);
