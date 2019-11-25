@@ -90,10 +90,6 @@ public class Game {
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
             }
-            IA_negamax tempIA = (IA_negamax) tabPlayers.get(0);
-            tempIA.saveOpeningBook("test6.txt");// En bleu
-            tempIA = (IA_negamax) tabPlayers.get(1);
-            tempIA.saveOpeningBook("test7.txt");// En rouge
         }
     }
 }

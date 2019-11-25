@@ -1,11 +1,9 @@
 package Models;
 
 import Views.GameGrid;
-import Views.GameWindow;
 
 public class Human extends Player {
     private String _name;
-    private int _clickedCol = -1;
 
     public Human(String _name, Integer _id) {
         super(_id);
@@ -16,15 +14,10 @@ public class Human extends Player {
         return _name;
     }
 
-    public void clickCol(int col) {
-        _clickedCol = col;
-    }
-
     @Override
     public int getAction(Grid grid) {
-        GameWindow.getGameWindow().get_gg().setHumanListener(this);
-        _clickedCol = -1;
-        while(_clickedCol <= -1 || _clickedCol >= 7) {
+        GameGrid.lastClickedCol = -1;
+        while(GameGrid.lastClickedCol <= -1 || GameGrid.lastClickedCol >= 7) {
             try {
                 Thread.sleep(100);
             }
@@ -32,7 +25,6 @@ public class Human extends Player {
 
             }
         }
-        GameWindow.getGameWindow().get_gg().setHumanListener(null);
-        return _clickedCol;
+        return GameGrid.lastClickedCol;
     }
 }
