@@ -20,8 +20,9 @@ public class GameWindow extends JFrame {
     }
     private GameWindow() {
         this.setTitle("Puissance 4");
-        this.setSize(1000, 650);
+        this.setSize(600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         _gm = new GameMenu();
         this.add(_gm);

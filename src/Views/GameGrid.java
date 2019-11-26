@@ -26,7 +26,7 @@ public class GameGrid extends JPanel {
         _menu.addActionListener(this::actionPerformed);
         _save.addActionListener(this::save);
         this.add(_tour);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 350, 0,0));
+//        this.setBorder(BorderFactory.createEmptyBorder(0, 350, 0,0));
         this.add(_save);
         this.add(_menu);
         _tour.setFont(new Font("Arial",Font.BOLD,22));
@@ -34,7 +34,7 @@ public class GameGrid extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                lastClickedCol = e.getX()/64;
+                lastClickedCol = (e.getX()/64)-1;
             }
         });
     }
@@ -52,9 +52,9 @@ public class GameGrid extends JPanel {
         super.paintComponent(g);
         int size = 64;
 
-        int y = 0;
+        int y = 100;
         for (int horz = 0; horz < GridUtils.NbLine; horz++) {
-            int x = 0;
+            int x = 70;
             for (int vert = 0; vert < GridUtils.NbCol; vert++) {
                 g.drawRect(x, y, size, size);
                 x += size;
@@ -68,7 +68,7 @@ public class GameGrid extends JPanel {
                 int xa = i / 7;
                 int ya = i % 7;
                 g.setColor(Color.red);
-                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
+                g.fillOval((xa * 64)+70, ((GridUtils.NbLine - ya - 1) * 64)+100, 64, 64);
             }
         }
         long bitboard2 = _grid.getBitboardPlayer2();
@@ -78,7 +78,7 @@ public class GameGrid extends JPanel {
                 int xa = i / 7;
                 int ya = i % 7;
                 g.setColor(Color.blue);
-                g.fillOval(xa * 64, (GridUtils.NbLine - ya - 1) * 64, 64, 64);
+                g.fillOval((xa * 64)+70, ((GridUtils.NbLine - ya - 1) * 64)+100, 64, 64);
             }
         }
 
