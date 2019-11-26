@@ -26,7 +26,7 @@ public class GameWindow extends JFrame {
         _gm = new GameMenu();
         this.add(_gm);
     }
-    public void update() {
+    public void update() {//refresh the frame
         this.invalidate();
         this.validate();
         this.repaint();
