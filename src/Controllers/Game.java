@@ -15,13 +15,7 @@ public class Game extends Thread {
     private Grid _grid;
     private Player _P1;
     private Player _P2;
-    private static Game _instance;
     private volatile boolean _stopGame = false;
-    static public Game getGame() {
-        if(_instance == null)
-            _instance = new Game();
-        return _instance;
-    }
     public void stopGame() {
         _stopGame = true;
     }
@@ -92,7 +86,6 @@ public class Game extends Thread {
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+((_grid.getNbMoves()%2)+1));
             }
-            System.out.println("    Coup de : " + _grid.getNbMoves()%2 + " : " + playerMove);
             _grid.play(playerMove);//play the move
             if (_grid.getNbMoves()==42){//if draw stop the game and change label
                 game = false;
