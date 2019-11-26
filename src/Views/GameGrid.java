@@ -44,11 +44,11 @@ public class GameGrid extends JPanel {
     public void actionPerformed(ActionEvent evt) {
         GameWindow.getGameWindow().startMenu();
     }
-    public void setLabelText(String text){
+    public void setLabelText(String text){//set the label
         _tour.setText(text);
         this.repaint();
     }
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {//paint the grid with lines and tokens
         super.paintComponent(g);
         int size = 64;
 

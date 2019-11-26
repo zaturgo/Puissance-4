@@ -1,7 +1,6 @@
 import Controllers.Game;
 import Models.Human;
 import Models.IA_gogo;
-import Models.IA_toto;
 import Models.Player;
 import Views.GameMenu;
 import Views.GameWindow;

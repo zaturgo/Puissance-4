@@ -38,7 +38,7 @@ public class Game extends Thread {
     public void load() {
         try {
             Scanner scanner = new Scanner(new File("Partie1"));
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {//reads line per line
                 String datas[] = scanner.nextLine().split(" ");
                 _grid.setNbMoves(Integer.parseInt(datas[2]));
                 _grid.setMask(Long.parseLong(datas[1]));
@@ -75,8 +75,8 @@ public class Game extends Thread {
 
         //game loop, stops when game == false;
         System.out.println("NEW GAME");
-        while(game && !_stopGame){
-            GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));
+        while(game && !_stopGame){//while game still running without draw game or winning
+            GameWindow.getGameWindow().get_gg().setLabelText("Tour du joueur "+((_grid.getNbMoves()%2)+1));//change the label on the right
             int playerMove = -1;
             try {
                 playerMove = tabPlayers.get(_grid.getNbMoves()%2).getAction((Grid)_grid.clone());
@@ -84,17 +84,17 @@ public class Game extends Thread {
             catch(Exception e) {
                 e.printStackTrace();
             }
-            if(!_grid.canPlay(playerMove)) {
+            if(!_grid.canPlay(playerMove)) {//if move outside the grid
                 System.out.println("Coup invalide !");
                 continue;
             }
-            if (_grid.isWinningMove(playerMove)){
+            if (_grid.isWinningMove(playerMove)){//if move makes a win
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Joueur gagnant:"+((_grid.getNbMoves()%2)+1));
             }
             System.out.println("    Coup de : " + _grid.getNbMoves()%2 + " : " + playerMove);
-            _grid.play(playerMove);
-            if (_grid.getNbMoves()==42){
+            _grid.play(playerMove);//play the move
+            if (_grid.getNbMoves()==42){//if draw stop the game and change label
                 game = false;
                 GameWindow.getGameWindow().get_gg().setLabelText("Egalité");
             }

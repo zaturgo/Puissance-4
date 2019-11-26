@@ -14,7 +14,7 @@ public class IA_gogo extends Player {
     private int _lastPlayChoose = 2; // Starts to 2 so we'll place it in the middle if we start
     public IA_gogo(Integer _id) {
         super(_id);
-        if(_id == 1) {
+        if(_id == 1) {//set opponent id
             _otherPlayerId = 2;
         }
         else {
@@ -32,38 +32,31 @@ public class IA_gogo extends Player {
         }
         catch(Exception e) {
         }
-    //System.out.println(_id+"/"+_otherPlayerId);
         OldGrid grid1 = new OldGrid();
         grid1.toArray(grid);
-//        GridUtils.debugGrid(grid1.getTokens());
         // First, let's see if we can win
         int temp = GridUtils.getWinnableCol(grid1.getTokens(), _id);
         if(temp != -1) {
-            //System.out.println("coup gagnant"+_id);
             return temp;
         }
         // Then, let's see if the other player can win next turn
         temp = GridUtils.getWinnableCol(grid1.getTokens(), _otherPlayerId);
         if(temp != -1) {
-            //System.out.println("block");
             return temp;
         }
         // Then, let's see if we can create an unavoidable win next turn
         temp = GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _id);
         if(temp != -1) {
-            //System.out.println("coup inevitable"+_id);
             return temp;
         }
         // Same for the other player
         temp = GridUtils.getUnavoidableWinNextTurn(grid1.getTokens(), _otherPlayerId);
         if(temp != -1) {
-            //System.out.println(_id+"block coup inevitable"+_otherPlayerId);
             return temp;
         }
         //check if two aligned to put a third
         temp = GridUtils.threeAligned(grid1.getTokens(),_id);
         if (temp!=-1&& GridUtils.opponentNotWinningNextTurn(grid1.getTokens(), temp, _id,_otherPlayerId)) {
-            //System.out.println("Trois alignés"+_id);
             return temp;
         }
         ArrayList<Integer> possibleMoves = new ArrayList<>();
@@ -76,8 +69,7 @@ public class IA_gogo extends Player {
                 possibleMoves.add(i);
             }
         }
-        if(possibleMoves.size() > 0) {
-            //System.out.println("random");
+        if(possibleMoves.size() > 0) {//if there is place without make the opponent winning
             return possibleMoves.get(r.nextInt(possibleMoves.size()));
         }
         return 1;
