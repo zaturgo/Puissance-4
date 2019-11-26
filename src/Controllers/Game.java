@@ -32,9 +32,6 @@ public class Game extends Thread {
         _P1 = P1;
         _P2 = P2;
     }
-    public void reset() {
-        _grid = new Grid();
-    }
     public Grid getGrid() {
         return _grid;
     }
