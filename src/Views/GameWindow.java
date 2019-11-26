@@ -49,7 +49,7 @@ public class GameWindow extends JFrame {
         _game.setPlayers(P1, P2);
 
         _gm.setVisible(false);
-        _gg = new GameGrid(_game.getGrid());
+        _gg = new GameGrid(_game);
         this.add(_gg);
 
         _game.start();
@@ -59,7 +59,7 @@ public class GameWindow extends JFrame {
         _game.setPlayers(P1, P2);//player set from the selector joption
 
         _gm.setVisible(false);//hide menu
-        _gg = new GameGrid(_game.getGrid());
+        _gg = new GameGrid(_game);
         this.add(_gg);//add game window
         _game.start();
     }

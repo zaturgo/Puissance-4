@@ -12,15 +12,15 @@ import java.awt.event.MouseEvent;
 
 public class GameGrid extends JPanel {
 
-    private Grid _grid;
+    private Game _game;
     private JLabel _tour = new JLabel("",SwingConstants.RIGHT);
     private JButton _save;
     private JButton _menu;
     private MouseAdapter _ma;
     public static int lastClickedCol = 0;
 
-    public GameGrid(Grid grid) {
-        _grid = grid;
+    public GameGrid(Game game) {
+        _game = game;
         _save = new JButton("Sauvegarder");
         _menu = new JButton("Retour au menu");
         _menu.addActionListener(this::actionPerformed);
@@ -39,7 +39,7 @@ public class GameGrid extends JPanel {
         });
     }
     private void save(ActionEvent evt) {
-        Game.getGame().save();
+        _game.save();
     }
     public void actionPerformed(ActionEvent evt) {
         GameWindow.getGameWindow().startMenu();
@@ -61,7 +61,7 @@ public class GameGrid extends JPanel {
             }
             y += size;
         }
-        long bitboard = _grid.getBitboardPlayer1();
+        long bitboard = _game.getGrid().getBitboardPlayer1();
         for(int i = 0; i < 48; i ++) {
             if((bitboard>>i)%2 == 1) {
                 //System.out.println("Vrai pour : " + i);
@@ -71,7 +71,7 @@ public class GameGrid extends JPanel {
                 g.fillOval((xa * 64)+70, ((GridUtils.NbLine - ya - 1) * 64)+100, 64, 64);
             }
         }
-        long bitboard2 = _grid.getBitboardPlayer2();
+        long bitboard2 = _game.getGrid().getBitboardPlayer2();
         for(int i = 0; i < 48; i ++) {
             if((bitboard2>>i)%2 == 1) {
                 //System.out.println("Vrai pour : " + i);
